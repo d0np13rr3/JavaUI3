@@ -7,12 +7,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 import java.util.Random;
 
-import Game.CheckData.InputName;
+import Game.CheckData.ExportCharacterList;
 import Game.enum_collection.CharacterClasses;
 import Game.enum_collection.CharacterSubClasses;
+import Game.enum_collection.WeaponEnum;
 import Game.import_export_data.*;
-import Game.CheckData.InputName.*;
-
 import static Game.CheckData.InputName.inputName;
 
 public abstract class Main {
@@ -29,9 +28,6 @@ public abstract class Main {
     public static int humanHealthOne;
     public static int humanDexterityOne;
     public static int humanAttackTwo, humanDefenseTwo, humanMagicTwo, humanManaTwo, humanHealthTwo, humanDexterityTwo;
-    public static int weaponAttackOne, weaponAttackTwo, weaponAttackThree;
-    public static int weaponDexterityOne, weaponDexterityTwo, weaponDexterityThree;
-    public static int weaponAttributeOne, weaponAttributeTwo, weaponAttributeThree;
     public static int baseHAOne, baseHATwo;
     public static JTextArea console;
     public static JScrollPane console2;
@@ -44,12 +40,17 @@ public abstract class Main {
     public static JLabel filler2;
     public static JLabel filler3;
     public static JLabel filler4;
-    public static JComboBox weaponCombo01;
-    public static JComboBox weaponCombo02;
+    public static JComboBox weaponCombo01 = new JComboBox(WeaponEnum.values());;
+    public static JComboBox weaponCombo02 = new JComboBox(WeaponEnum.values());;
     public static JComboBox ItemList;
     public static JComboBox ClassList = new JComboBox(CharacterClasses.values());
     public static JComboBox SubClassesList= new JComboBox(CharacterSubClasses.values());
-    public static JComboBox WeaponList;
+
+    //creates Character list
+    ExportCharacterList exportCharacterList = new ExportCharacterList();
+    public static JComboBox CharacterOne = new JComboBox(ExportCharacterList.exportCharacterList());
+    public static JComboBox CharacterTwo = new JComboBox(ExportCharacterList.exportCharacterList());
+
 
     public static void main(String[] args) {
         // Makes window
@@ -57,7 +58,6 @@ public abstract class Main {
         //Creates first player
         Actions action01 = new Actions();
         Human Batman = new Human("Batman", action01);
-        // System.out.println("He who always wins " + Batman.humanName);
         //Defines global attributes of human One
         humanNameOne = Batman.getName();
         humanAttackOne = Batman.getAttack();
@@ -69,7 +69,6 @@ public abstract class Main {
 
         //Creates second player
         Human Spiderman = new Human("Spiderman", action01);
-        //System.out.println("He with responsibility issues " + Spiderman.humanName);
         // Defines global attributes of human Two
         humanNameTwo = Spiderman.getName();
         humanAttackTwo = Spiderman.getAttack();
@@ -79,24 +78,6 @@ public abstract class Main {
         humanMagicTwo = Spiderman.getMagic();
         humanManaTwo = Spiderman.getMana();
 
-        Weapon Axe = new Weapon("Axe");
-        Axe.setAttack(100);
-        weaponAttackOne = Axe.getAttack();
-        //System.out.println(Axe.attack);
-
-        Weapon Sword = new Weapon("Sword");
-        Sword.setAttack(75);
-        weaponAttackTwo = Sword.getAttack();
-        Sword.setDexterity(25);
-        weaponDexterityTwo = Sword.getDexterity();
-        //System.out.println(Axe.attack);
-
-        Weapon Bow = new Weapon("Bow");
-        Bow.setAttack(15);
-        weaponAttackThree = Bow.getAttack();
-        Bow.setDexterity(85);
-        weaponDexterityThree = Bow.getDexterity();
-        //System.out.println(Axe.attack);
 
     }
 
@@ -122,6 +103,8 @@ public abstract class Main {
             public void actionPerformed(ActionEvent e) {
                 humanAttackOne = baseHAOne;
                 humanAttackTwo = baseHATwo;
+                console001.setText("");
+                console002.setText("");
             }
         });
 
@@ -138,34 +121,29 @@ public abstract class Main {
     }
 
     private static void createUI(final JFrame frame) {
-        String weaponList[] = {"Axe", "Sword", "Bow"};
 
         JTabbedPane tabbedPane = new JTabbedPane();
-
         // first panel
         JPanel panel1 = new JPanel(false);
+        tabbedPane.addTab("Battle", null, panel1, "Tab 1 tooltip");
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        filler = new JLabel(nameOne);
-        filler5 = new JLabel(nameTwo);
-        //JLabel filler6 = new JLabel("...");
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        filler5.setHorizontalAlignment(JLabel.CENTER);
+//        filler = new JLabel(nameOne);
+//        filler5 = new JLabel(nameTwo);
+//        filler.setHorizontalAlignment(JLabel.CENTER);
+//        filler5.setHorizontalAlignment(JLabel.CENTER);
 
         JButton button0 = new JButton("Battle");
 
         console = new JTextArea(10, 25);
         console2 = new JScrollPane(console);
-        //console2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panel1.setLayout(new BorderLayout());
-        panel1.add(filler, BorderLayout.LINE_START);
-        panel1.add(filler5, BorderLayout.LINE_END);
+        panel1.add(CharacterOne, BorderLayout.LINE_START);
+        panel1.add(CharacterTwo, BorderLayout.LINE_END);
 
         panel1.add(button0, BorderLayout.SOUTH);
         panel1.add(console2, BorderLayout.CENTER);
-        //console2.setPreferredSize(new Dimension(20,20));
-        tabbedPane.addTab("Battle", null, panel1, "Tab 1 tooltip");
-        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         button0.addActionListener(new ActionListener() {
 
@@ -186,9 +164,6 @@ public abstract class Main {
         filler3 = new JLabel("Spiderman");
         console001 = new JTextArea(10, 25);
         console002 = new JTextArea(10, 25);
-
-        weaponCombo01 = new JComboBox(weaponList);
-        weaponCombo02 = new JComboBox(weaponList);
 
         JButton button1 = new JButton("Save equipment Player One");
         JButton button2 = new JButton("Save equipment Player Two");
@@ -213,47 +188,20 @@ public abstract class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 systemPrint();
-                String weaponOfChoice;
-                weaponOfChoice = (String)weaponCombo01.getItemAt(weaponCombo01.getSelectedIndex());
-                if(weaponOfChoice == "Axe")
-                {weaponAttributeOne = weaponAttackOne;
-                    console001.setText(weaponOfChoice + " " + weaponAttributeOne);
-                    baseHAOne = humanAttackOne;
-                    humanAttackOne = humanAttackOne + weaponAttributeOne;}
-                if(weaponOfChoice == "Sword")
-                {weaponAttributeTwo = weaponAttackTwo;
-                    console001.setText(weaponOfChoice + " " + weaponAttributeTwo);
-                    baseHAOne = humanAttackOne;
-                    humanAttackOne = humanAttackOne + weaponAttributeTwo;}
-                if(weaponOfChoice == "Bow")
-                {weaponAttributeThree = weaponAttackThree;
-                    console001.setText(weaponOfChoice + " " + weaponAttributeThree);
-                    baseHAOne = humanAttackOne;
-                    humanAttackOne = humanAttackOne + weaponAttributeThree;}
+
+                WeaponEnum weaponEnum = WeaponEnum.valueOf(weaponCombo01.getSelectedItem().toString());
+                console001.setText(weaponEnum.getName() + " " + weaponEnum.getAttack());
+                humanAttackOne = humanAttackOne + weaponEnum.getAttack();
             }
         });
-
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                systemPrint();
-                String weaponOfChoice;
-                weaponOfChoice = (String)weaponCombo02.getItemAt(weaponCombo02.getSelectedIndex());
-                if(weaponOfChoice == "Axe")
-                {weaponAttributeOne = weaponAttackOne;
-                    console002.setText(weaponOfChoice + " " + weaponAttributeOne);
-                    baseHATwo = humanAttackTwo;
-                    humanAttackTwo = humanAttackTwo + weaponAttributeOne;}
-                if(weaponOfChoice == "Sword")
-                {weaponAttributeTwo = weaponAttackTwo;
-                    console002.setText(weaponOfChoice + " " + weaponAttributeTwo);
-                    baseHATwo = humanAttackTwo;
-                    humanAttackTwo = humanAttackTwo + weaponAttributeTwo;}
-                if(weaponOfChoice == "Bow")
-                {weaponAttributeThree = weaponAttackThree;
-                    console002.setText(weaponOfChoice + " " + weaponAttributeThree);
-                    baseHATwo = humanAttackTwo;
-                    humanAttackTwo = humanAttackTwo + weaponAttributeThree;}
+
+                WeaponEnum weaponEnum = WeaponEnum.valueOf(weaponCombo02.getSelectedItem().toString());
+                console002.setText(weaponEnum.getName() + " " + weaponEnum.getAttack());
+                humanAttackTwo = humanAttackTwo + weaponEnum.getAttack();
+
             }
         });
 
@@ -272,15 +220,11 @@ public abstract class Main {
 
         JLabel label01 = new JLabel("Class: ");
         contentPane.add(ClassList);
-//        JTextField textField01 = new JTextField("My Text Field 01", 10);
         contentPane.add(label01);
-//        contentPane.add(textField01);
 
         JLabel label02 = new JLabel("SubClass: ");
         contentPane.add(SubClassesList);
-//        JTextField textField02 = new JTextField("My Text Field 02", 10);
         contentPane.add(label02);
-//        contentPane.add(textField02);
 
         JLabel label03 = new JLabel("A story unfolds ");
 

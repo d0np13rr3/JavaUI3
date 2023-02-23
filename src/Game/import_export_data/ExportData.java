@@ -32,6 +32,19 @@ public class ExportData {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        // verdere dimensies toevoegen aan karakters
+        if (spacesClass.equals("CharacterSaveCode")){
+            try {
+                FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + spacesName +"CharacterSaveCode.txt",true);
+                myWriter.write("0000XP" + "\n");
+                myWriter.write("0000CURRENCY" + "\n");
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        }
 
     }
 

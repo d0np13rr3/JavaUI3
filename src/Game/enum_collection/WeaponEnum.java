@@ -1,6 +1,6 @@
 package Game.enum_collection;
 
-public enum Weapon {
+public enum WeaponEnum {
     AXE(0,100,0,0,0,0, "Axe"),
     BOW(0, 15,0,0,85,0, "Bow"),
     SWORD(0,75,0,0,25,0, "Sword"),
@@ -26,7 +26,7 @@ public enum Weapon {
     private final int defense;
     private final String name;
 
-    Weapon(int health, int attack, int magic, int mana, int dexterity, int defense, String name) {
+    WeaponEnum(int health, int attack, int magic, int mana, int dexterity, int defense, String name) {
         this.health = health;
         this.attack = attack;
         this.magic = magic;
@@ -42,5 +42,6 @@ public enum Weapon {
     public int getMana() {return mana;}
     public int getDexterity() {return dexterity;}
     public int getDefense() {return defense;}
+    public String getName() {return name;}
 
 }
