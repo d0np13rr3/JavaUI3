@@ -1,6 +1,8 @@
-package Game;
+package Game.ClassesCollection;
 
-class Human{
+import Game.Actions;
+
+public class Human{
     private int health, attack, magic, mana, dexterity, defense;
     private String name;
     Actions action = new Actions();

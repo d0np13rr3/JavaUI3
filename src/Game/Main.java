@@ -5,14 +5,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
-import java.util.Random;
 
 import Game.CheckData.ExportCharacterList;
+import Game.ClassesCollection.Human;
 import Game.enum_collection.CharacterClasses;
 import Game.enum_collection.CharacterSubClasses;
 import Game.enum_collection.WeaponEnum;
 import Game.import_export_data.*;
 import static Game.CheckData.InputName.inputName;
+import static Game.import_export_data.ExportNameAndClass.exportCharacterStats;
+
 
 public abstract class Main {
     //constants
@@ -150,6 +152,11 @@ public abstract class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 systemPrint();
+                String characterFirst  = String.valueOf(CharacterOne.getItemAt(CharacterOne.getSelectedIndex()));
+                System.out.println((String)exportCharacterStats(characterFirst)[1]);
+                //maak constructor aan met behulp van de 2 geselecteerde namen
+                //haal attack en defense op van de 2 geselecteerde namen
+                //steek ze in Battle
                 Actions.Battle();
             }
         });

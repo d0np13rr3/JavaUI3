@@ -6,6 +6,8 @@ import static Game.Main.*;
 
 public class Actions {
 
+
+
     public static int determineAttack(int humanAttackLevel) {
         Random random = new Random();
         int randomInteger = random.nextInt(100);
