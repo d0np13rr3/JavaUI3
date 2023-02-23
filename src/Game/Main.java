@@ -6,8 +6,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import java.util.Random;
+
+import Game.enum_collection.CharacterClasses;
+import Game.enum_collection.CharacterSubClasses;
 import Game.import_export_data.*;
+import Game.CheckData.InputName;
 public abstract class Main {
+    //constants
+    static final String CVS = "CharacterSaveCode";
     //variables
     public static String nameOne = "Spiderman";
     public static String nameTwo = "Batman";
@@ -37,6 +43,9 @@ public abstract class Main {
     public static JComboBox weaponCombo01;
     public static JComboBox weaponCombo02;
     public static JComboBox ItemList;
+    public static JComboBox ClassList = new JComboBox(CharacterClasses.values());
+    public static JComboBox SubClassesList= new JComboBox(CharacterSubClasses.values());
+    public static JComboBox WeaponList;
 
     public static void main(String[] args) {
         // Makes window
@@ -253,19 +262,21 @@ public abstract class Main {
         contentPane.setLayout(layout);
 
         JLabel label = new JLabel("Name: ");
-        JTextField textField = new JTextField("My Text Field 00", 10);
+        JTextField textField = new JTextField("Your name here", 10);
         contentPane.add(label);
         contentPane.add(textField);
 
-        JLabel label01 = new JLabel("Type: ");
-        JTextField textField01 = new JTextField("My Text Field 01", 10);
+        JLabel label01 = new JLabel("Class: ");
+        contentPane.add(ClassList);
+//        JTextField textField01 = new JTextField("My Text Field 01", 10);
         contentPane.add(label01);
-        contentPane.add(textField01);
+//        contentPane.add(textField01);
 
-        JLabel label02 = new JLabel("History: ");
-        JTextField textField02 = new JTextField("My Text Field 02", 10);
+        JLabel label02 = new JLabel("SubClass: ");
+        contentPane.add(SubClassesList);
+//        JTextField textField02 = new JTextField("My Text Field 02", 10);
         contentPane.add(label02);
-        contentPane.add(textField02);
+//        contentPane.add(textField02);
 
         JLabel label03 = new JLabel("A story unfolds ");
 
@@ -293,10 +304,10 @@ public abstract class Main {
         //verticale calibratie van label veld
         layout.putConstraint(SpringLayout.SOUTH, label01,0,SpringLayout.NORTH, label02);
         //andere velden
-        layout.putConstraint(SpringLayout.WEST, textField01,8,SpringLayout.EAST, label01);
-        layout.putConstraint(SpringLayout.NORTH, textField01,6,SpringLayout.NORTH, label01);
-        layout.putConstraint(SpringLayout.WEST, contentPane,6,SpringLayout.EAST, textField01);
-        layout.putConstraint(SpringLayout.NORTH, contentPane,6,SpringLayout.NORTH, textField01);
+        layout.putConstraint(SpringLayout.WEST, ClassList,21,SpringLayout.EAST, label01);
+        layout.putConstraint(SpringLayout.NORTH, ClassList,6,SpringLayout.NORTH, label01);
+        layout.putConstraint(SpringLayout.WEST, contentPane,6,SpringLayout.EAST, ClassList);
+        layout.putConstraint(SpringLayout.NORTH, contentPane,6,SpringLayout.NORTH, ClassList);
 
         //derde 3 velden
         layout.putConstraint(SpringLayout.WEST, label02,4,SpringLayout.WEST, contentPane);
@@ -304,10 +315,10 @@ public abstract class Main {
         //verticale calibratie van label veld
         layout.putConstraint(SpringLayout.SOUTH, label02,0,SpringLayout.NORTH, label03);
         //andere velden
-        layout.putConstraint(SpringLayout.WEST, textField02,6,SpringLayout.EAST, label02);
-        layout.putConstraint(SpringLayout.NORTH, textField02,6,SpringLayout.NORTH, label02);
-        layout.putConstraint(SpringLayout.WEST, contentPane,6,SpringLayout.EAST, textField02);
-        layout.putConstraint(SpringLayout.NORTH, contentPane,6,SpringLayout.NORTH, textField02);
+        layout.putConstraint(SpringLayout.WEST, SubClassesList,6,SpringLayout.EAST, label02);
+        layout.putConstraint(SpringLayout.NORTH, SubClassesList,6,SpringLayout.NORTH, label02);
+        layout.putConstraint(SpringLayout.WEST, contentPane,6,SpringLayout.EAST, SubClassesList);
+        layout.putConstraint(SpringLayout.NORTH, contentPane,6,SpringLayout.NORTH, SubClassesList);
 
         //vierde veld
         layout.putConstraint(SpringLayout.WEST, label03,14,SpringLayout.WEST, contentPane);
@@ -321,8 +332,15 @@ public abstract class Main {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String arrayOfData[] = {"Thor", "God", "Hammer"};
-                ExportData.storeData(arrayOfData,"Thor", "Class");
+
+                String name = textField.getText();
+                Class chosenClass = ClassList.getItemAt(ClassList.getSelectedIndex()).getClass();
+                String classOfChoice = chosenClass.getName();
+                Class chosenSubClass = SubClassesList.getItemAt(SubClassesList.getSelectedIndex()).getClass();
+                String subClassOfChoice = chosenSubClass.getName();
+
+                String arrayOfData[] = {name, classOfChoice, subClassOfChoice};
+                ExportData.storeData(arrayOfData,name, CVS);
             }
         });
 

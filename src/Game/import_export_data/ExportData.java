@@ -21,9 +21,9 @@ public class ExportData {
         //writing to file
         try {
             FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + itemName + itemClass +".txt");
-            myWriter.write("Files in Java might be tricky, but it is fun enough!\n");
-            myWriter.write("Line 2\n");
-            myWriter.write("line 3\n");
+            for(String dataLine : data){
+                myWriter.write(dataLine + "\n");
+            }
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
