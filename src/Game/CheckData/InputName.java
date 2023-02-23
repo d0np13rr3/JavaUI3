@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 public class InputName {
 
-    ArrayList<String> names = new ArrayList<String>();
 
-    public void inputName(String name) {
+
+    public static void inputName(String name) {
+        ArrayList<String> names = new ArrayList<String>();
+        String spacesName = name.replaceAll(" ","_");
         try {
             File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\CharacterList.txt");
             Scanner myReader = new Scanner(myObj);
@@ -37,16 +39,16 @@ public class InputName {
             e.printStackTrace();
         }
         //check if name is already in list
-        for(String names : names){
-            if(names.equals(name)){
+        for(String namesToIterate : names){
+            if(names.equals(spacesName)){
                 throw new IllegalArgumentException("Name already exists");
             }
         }
 
         //writing to file
         try {
-            FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\CharacterList.txt");
-            myWriter.write(name + "\n");
+            FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\CharacterList.txt",true);
+            myWriter.write(spacesName + "\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {

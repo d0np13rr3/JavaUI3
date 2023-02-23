@@ -6,9 +6,11 @@ import java.io.IOException;  // Import the IOException class to handle errors
 public class ExportData {
 
     public static void storeData(String[] data, String itemName, String itemClass) {
+        String spacesName = itemName.replaceAll(" ","_");
+        String spacesClass = itemClass.replaceAll(" ","_");
         //creating file
         try {
-            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + itemName + itemClass +".txt");
+            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + spacesName + spacesClass +".txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -20,7 +22,7 @@ public class ExportData {
         }
         //writing to file
         try {
-            FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + itemName + itemClass +".txt");
+            FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + spacesName + spacesClass +".txt");
             for(String dataLine : data){
                 myWriter.write(dataLine + "\n");
             }

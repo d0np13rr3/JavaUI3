@@ -7,10 +7,14 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 import java.util.Random;
 
+import Game.CheckData.InputName;
 import Game.enum_collection.CharacterClasses;
 import Game.enum_collection.CharacterSubClasses;
 import Game.import_export_data.*;
-import Game.CheckData.InputName;
+import Game.CheckData.InputName.*;
+
+import static Game.CheckData.InputName.inputName;
+
 public abstract class Main {
     //constants
     static final String CVS = "CharacterSaveCode";
@@ -332,13 +336,15 @@ public abstract class Main {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //get and check and add name
                 String name = textField.getText();
-                Class chosenClass = ClassList.getItemAt(ClassList.getSelectedIndex()).getClass();
-                String classOfChoice = chosenClass.getName();
-                Class chosenSubClass = SubClassesList.getItemAt(SubClassesList.getSelectedIndex()).getClass();
-                String subClassOfChoice = chosenSubClass.getName();
-
+                inputName(name);
+                //get and check class
+                String chosenClass = String.valueOf(ClassList.getItemAt(ClassList.getSelectedIndex()));
+                String classOfChoice = chosenClass;
+                String chosenSubClass = String.valueOf(SubClassesList.getItemAt(SubClassesList.getSelectedIndex()));
+                String subClassOfChoice = chosenSubClass;
+                //add character file
                 String arrayOfData[] = {name, classOfChoice, subClassOfChoice};
                 ExportData.storeData(arrayOfData,name, CVS);
             }
