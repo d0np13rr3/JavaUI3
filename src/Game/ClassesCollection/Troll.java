@@ -2,11 +2,12 @@ package Game.ClassesCollection;
 
 import Game.Actions;
 
-public class Human extends Character{
+
+public class Troll extends Character{
     private int health, attack, magic, mana, dexterity, defense;
     private String name;
     Actions action = new Actions();
-    public Human(String name, Actions action){
+    public Troll(String name, Actions action){
         health = 100;
         attack = 10;
         magic = 0;

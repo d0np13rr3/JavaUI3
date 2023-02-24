@@ -46,8 +46,6 @@ public class Actions {
             playerTwoLife = playerTwoLife - AttackByOne;
             if (playerTwoLife <= 0){
                 console.append(humanNameOne + " attacked for " + AttackByOne + ". " + "\n" + humanNameTwo + " lost the battle.");
-                filler.setText(humanNameOne + " Won");
-                filler5.setText(humanNameTwo + " Lost");
                 break;
             }else {
                 console.append(humanNameOne + " attacked for " + AttackByOne + ". " + humanNameTwo + " has " + playerTwoLife + " health left." + "\n");
@@ -61,8 +59,6 @@ public class Actions {
             playerOneLife = playerOneLife - AttackByTwo;
             if (playerOneLife <= 0){
                 console.append(humanNameTwo + " attacked for " + AttackByTwo + ". " + "\n" + humanNameOne + " lost the battle.");
-                filler.setText(humanNameOne + " Lost");
-                filler5.setText(humanNameTwo + " Won");
                 break;
 
             }else {

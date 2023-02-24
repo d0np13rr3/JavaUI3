@@ -1,17 +1,23 @@
 package Game;
 
+import Game.CheckData.CasingMethods;
+import Game.CheckData.ExportCharacterList;
+import Game.ClassesCollection.Character;
+import Game.ClassesCollection.God;
+import Game.ClassesCollection.Human;
+import Game.ClassesCollection.StringToConstructorSwitch;
+import Game.enum_collection.CharacterClasses;
+import Game.enum_collection.CharacterSubClasses;
+import Game.enum_collection.WeaponEnum;
+import Game.import_export_data.ExportData;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import javax.swing.*;
 
-import Game.CheckData.ExportCharacterList;
-import Game.ClassesCollection.Human;
-import Game.enum_collection.CharacterClasses;
-import Game.enum_collection.CharacterSubClasses;
-import Game.enum_collection.WeaponEnum;
-import Game.import_export_data.*;
+import static Game.CheckData.CasingMethods.toTitleCaseOneWord;
 import static Game.CheckData.InputName.inputName;
 import static Game.import_export_data.ExportNameAndClass.exportCharacterStats;
 
@@ -151,11 +157,23 @@ public abstract class Main {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                systemPrint();
+                //get character and class
                 String characterFirst  = String.valueOf(CharacterOne.getItemAt(CharacterOne.getSelectedIndex()));
-                System.out.println((String)exportCharacterStats(characterFirst)[1]);
+                String upperCaseCharacter = (String)exportCharacterStats(characterFirst)[1];
+                String constructorClassCharacter = CasingMethods.toTitleCaseOneWord(upperCaseCharacter);
+                System.out.println(constructorClassCharacter);
+                String characterSecond  = String.valueOf(CharacterTwo.getItemAt(CharacterTwo.getSelectedIndex()));
+                String upperCaseCharacter00 = (String)exportCharacterStats(characterSecond)[1];
+                String constructorClassCharacter00 = CasingMethods.toTitleCaseOneWord(upperCaseCharacter00);
+                System.out.println(constructorClassCharacter00);
                 //maak constructor aan met behulp van de 2 geselecteerde namen
+                Character characterOne = StringToConstructorSwitch.constructorClass(constructorClassCharacter, characterFirst);
+                Character characterTwo = StringToConstructorSwitch.constructorClass(constructorClassCharacter00, characterSecond);
                 //haal attack en defense op van de 2 geselecteerde namen
+                humanAttackOne = characterOne.getAttack();
+                humanDefenseOne = characterOne.getDefense();
+                humanAttackTwo = characterTwo.getAttack();
+                humanDefenseTwo = characterTwo.getDefense();
                 //steek ze in Battle
                 Actions.Battle();
             }
