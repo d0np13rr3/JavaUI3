@@ -19,4 +19,14 @@ public class God extends Character{
 
 
     }
+
+    @Override
+    public int getAttack() {
+        return 0;
+    }
+
+    @Override
+    public int getDefense() {
+        return 0;
+    }
 }
