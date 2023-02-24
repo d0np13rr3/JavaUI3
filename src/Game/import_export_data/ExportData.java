@@ -5,6 +5,19 @@ import java.io.File;  // Import the File class
 import java.io.IOException;  // Import the IOException class to handle errors
 public class ExportData {
 
+ public static void resetWeapon(String name){
+        String spacesName = name.replaceAll(" ","_");
+        try {
+        FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + spacesName +"WeaponSaveCode.txt",false);
+            myWriter.write("");
+        myWriter.close();
+        System.out.println("Successfully wrote to the file.");
+    } catch (IOException e) {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
+    }
+   }
+
     public static void storeData(String[] data, String itemName, String itemClass) {
         String spacesName = itemName.replaceAll(" ","_");
         String spacesClass = itemClass.replaceAll(" ","_");

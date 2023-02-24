@@ -22,11 +22,16 @@ public class God extends Character{
 
     @Override
     public int getAttack() {
-        return 0;
+        return attack;
     }
 
     @Override
     public int getDefense() {
-        return 0;
+        return defense;
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
     }
 }

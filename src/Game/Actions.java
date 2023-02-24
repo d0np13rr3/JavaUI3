@@ -26,7 +26,7 @@ public class Actions {
 
     }
 
-    public static String Battle() {
+    public static String Battle(int humanAttackOne, int humanDefenseOne, int humanAttackTwo,  int humanDefenseTwo, int humanHealthOne, int humanHealthTwo, String humanNameOne, String humanNameTwo) {
         int playerOneLife = humanHealthOne;
         int playerTwoLife = humanHealthTwo;
         System.out.println(playerOneLife);

@@ -19,12 +19,15 @@ import java.awt.event.KeyEvent;
 
 import static Game.CheckData.CasingMethods.toTitleCaseOneWord;
 import static Game.CheckData.InputName.inputName;
+import static Game.import_export_data.ExportData.resetWeapon;
 import static Game.import_export_data.ExportNameAndClass.exportCharacterStats;
+import static Game.import_export_data.ExportNameAndClass.exportWeaponStats;
 
 
 public abstract class Main {
     //constants
     static final String CVS = "CharacterSaveCode";
+    static final String WVS = "WeaponSaveCode";
     //variables
     public static String nameOne = "Spiderman";
     public static String nameTwo = "Batman";
@@ -43,10 +46,6 @@ public abstract class Main {
     public static JTextArea console01;
     public static JTextArea console001;
     public static JTextArea console002;
-    public static JLabel filler;
-    public static JLabel filler5;
-    public static JLabel filler2;
-    public static JLabel filler3;
     public static JLabel filler4;
     public static JComboBox weaponCombo01 = new JComboBox(WeaponEnum.values());;
     public static JComboBox weaponCombo02 = new JComboBox(WeaponEnum.values());;
@@ -58,34 +57,13 @@ public abstract class Main {
     ExportCharacterList exportCharacterList = new ExportCharacterList();
     public static JComboBox CharacterOne = new JComboBox(ExportCharacterList.exportCharacterList());
     public static JComboBox CharacterTwo = new JComboBox(ExportCharacterList.exportCharacterList());
+    public static JComboBox CharacterOnePage2 = new JComboBox(ExportCharacterList.exportCharacterList());
+    public static JComboBox CharacterTwoPage2 = new JComboBox(ExportCharacterList.exportCharacterList());
 
 
     public static void main(String[] args) {
         // Makes window
         createWindow();
-        //Creates first player
-        Actions action01 = new Actions();
-        Human Batman = new Human("Batman", action01);
-        //Defines global attributes of human One
-        humanNameOne = Batman.getName();
-        humanAttackOne = Batman.getAttack();
-        humanDefenseOne = Batman.getDefense();
-        humanDexterityOne = Batman.getDexterity();
-        humanHealthOne = Batman.getHealth();
-        humanMagicOne = Batman.getMagic();
-        humanManaOne = Batman.getMana();
-
-        //Creates second player
-        Human Spiderman = new Human("Spiderman", action01);
-        // Defines global attributes of human Two
-        humanNameTwo = Spiderman.getName();
-        humanAttackTwo = Spiderman.getAttack();
-        humanDefenseTwo = Spiderman.getDefense();
-        humanDexterityTwo = Spiderman.getDexterity();
-        humanHealthTwo = Spiderman.getHealth();
-        humanMagicTwo = Spiderman.getMagic();
-        humanManaTwo = Spiderman.getMana();
-
 
     }
 
@@ -96,8 +74,8 @@ public abstract class Main {
 
         JMenuBar menubar = new JMenuBar();
         JMenu menu = new JMenu("Actions");
-        JMenuItem size00 = new JMenuItem("Reset Battle");
-        JMenuItem size01 = new JMenuItem("Reset Equipment");
+        JMenuItem size00 = new JMenuItem("Reset Battle - on first page");
+        JMenuItem size01 = new JMenuItem("Reset Equipment - on first page");
 
         size00.addActionListener(new ActionListener() {
             @Override
@@ -109,8 +87,12 @@ public abstract class Main {
         size01.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                humanAttackOne = baseHAOne;
-                humanAttackTwo = baseHATwo;
+                String characterFirst  = String.valueOf(CharacterOne.getItemAt(CharacterOne.getSelectedIndex()));
+                String characterSecond  = String.valueOf(CharacterTwo.getItemAt(CharacterTwo.getSelectedIndex()));
+                resetWeapon(characterFirst);
+                resetWeapon(characterSecond);
+//                humanAttackOne = baseHAOne;
+//                humanAttackTwo = baseHATwo;
                 console001.setText("");
                 console002.setText("");
             }
@@ -161,21 +143,36 @@ public abstract class Main {
                 String characterFirst  = String.valueOf(CharacterOne.getItemAt(CharacterOne.getSelectedIndex()));
                 String upperCaseCharacter = (String)exportCharacterStats(characterFirst)[1];
                 String constructorClassCharacter = CasingMethods.toTitleCaseOneWord(upperCaseCharacter);
-                System.out.println(constructorClassCharacter);
+                //System.out.println(constructorClassCharacter);
                 String characterSecond  = String.valueOf(CharacterTwo.getItemAt(CharacterTwo.getSelectedIndex()));
                 String upperCaseCharacter00 = (String)exportCharacterStats(characterSecond)[1];
                 String constructorClassCharacter00 = CasingMethods.toTitleCaseOneWord(upperCaseCharacter00);
-                System.out.println(constructorClassCharacter00);
+                //System.out.println(constructorClassCharacter00);
                 //maak constructor aan met behulp van de 2 geselecteerde namen
                 Character characterOne = StringToConstructorSwitch.constructorClass(constructorClassCharacter, characterFirst);
                 Character characterTwo = StringToConstructorSwitch.constructorClass(constructorClassCharacter00, characterSecond);
+                System.out.println(characterOne.toString());
+                System.out.println(characterTwo.toString());
                 //haal attack en defense op van de 2 geselecteerde namen
-                humanAttackOne = characterOne.getAttack();
-                humanDefenseOne = characterOne.getDefense();
-                humanAttackTwo = characterTwo.getAttack();
-                humanDefenseTwo = characterTwo.getDefense();
+                int humanAttack1 = characterOne.getAttack();
+                int humanDefense1 = characterOne.getDefense();
+                int humanAttack2 = characterTwo.getAttack();
+                int humanDefense2 = characterTwo.getDefense();
+                int humanHealth1 = characterOne.getHealth();
+                int humanHealth2 = characterTwo.getHealth();
+                String humanName1 = characterFirst;
+                String humanName2= characterSecond;
+                //haal wapenschade op van de 2 geselecteerde namen
+                int weaponDamage1 = 0;
+                int weaponDamage2 = 0;
+                try {
+                    weaponDamage1 = Integer.parseInt(exportWeaponStats(characterFirst)[1]);
+                    weaponDamage2 = Integer.parseInt(exportWeaponStats(characterSecond)[1]);
+                } catch (Exception ex) {
+                    System.out.println("No weapons selected");
+                }
                 //steek ze in Battle
-                Actions.Battle();
+                Actions.Battle((humanAttack1+weaponDamage1), humanDefense1, (humanAttack2+weaponDamage2), humanDefense2, humanHealth1, humanHealth2, humanName1, humanName2);
             }
         });
 
@@ -185,20 +182,20 @@ public abstract class Main {
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
         frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
-        filler2 = new JLabel("Batman");
-        filler3 = new JLabel("Spiderman");
+//        filler2 = new JLabel(humanNameOne);
+//        filler3 = new JLabel(humanNameTwo);
         console001 = new JTextArea(10, 25);
         console002 = new JTextArea(10, 25);
 
         JButton button1 = new JButton("Save equipment Player One");
         JButton button2 = new JButton("Save equipment Player Two");
-        filler2.setHorizontalAlignment(JLabel.CENTER);
-        filler3.setHorizontalAlignment(JLabel.CENTER);
+//        filler2.setHorizontalAlignment(JLabel.CENTER);
+//        filler3.setHorizontalAlignment(JLabel.CENTER);
         console001.setAlignmentX((float)0.5);
         console002.setAlignmentX((float)0.5);
         panel2.setLayout(new GridLayout(2, 1, 10, 10));
-        panel2.add(filler2);
-        panel2.add(filler3);
+        panel2.add(CharacterOnePage2);
+        panel2.add(CharacterTwoPage2);
 
         panel2.add(weaponCombo01);
         panel2.add(weaponCombo02);
@@ -216,7 +213,11 @@ public abstract class Main {
 
                 WeaponEnum weaponEnum = WeaponEnum.valueOf(weaponCombo01.getSelectedItem().toString());
                 console001.setText(weaponEnum.getName() + " " + weaponEnum.getAttack());
-                humanAttackOne = humanAttackOne + weaponEnum.getAttack();
+                String[] weaponStats = {weaponEnum.getName(), String.valueOf(weaponEnum.getAttack())};
+                String characterSecond  = String.valueOf(CharacterOnePage2.getItemAt(CharacterOnePage2.getSelectedIndex()));
+                ExportData.storeData(weaponStats, characterSecond, WVS);
+//                baseHAOne = humanAttackOne;
+//                humanAttackOne = humanAttackOne + weaponEnum.getAttack();
             }
         });
         button2.addActionListener(new ActionListener() {
@@ -225,7 +226,12 @@ public abstract class Main {
 
                 WeaponEnum weaponEnum = WeaponEnum.valueOf(weaponCombo02.getSelectedItem().toString());
                 console002.setText(weaponEnum.getName() + " " + weaponEnum.getAttack());
-                humanAttackTwo = humanAttackTwo + weaponEnum.getAttack();
+                String[] weaponStats = {weaponEnum.getName(), String.valueOf(weaponEnum.getAttack())};
+                String characterSecond  = String.valueOf(CharacterTwoPage2.getItemAt(CharacterTwoPage2.getSelectedIndex()));
+                ExportData.storeData(weaponStats, characterSecond, WVS);
+
+//                baseHATwo = humanAttackOne;
+//                humanAttackTwo = humanAttackTwo + weaponEnum.getAttack();
 
             }
         });
