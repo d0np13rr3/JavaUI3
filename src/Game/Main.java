@@ -11,11 +11,16 @@ import Game.enum_collection.CharacterSubClasses;
 import Game.enum_collection.WeaponEnum;
 import Game.import_export_data.ExportData;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 import static Game.CheckData.CasingMethods.toTitleCaseOneWord;
 import static Game.CheckData.InputName.inputName;
@@ -29,17 +34,6 @@ public abstract class Main {
     static final String CVS = "CharacterSaveCode";
     static final String WVS = "WeaponSaveCode";
     //variables
-    public static String nameOne = "Spiderman";
-    public static String nameTwo = "Batman";
-    public static String humanNameOne, humanNameTwo;
-    public static int humanAttackOne;
-    public static int humanDefenseOne;
-    public static int humanMagicOne;
-    public static int humanManaOne;
-    public static int humanHealthOne;
-    public static int humanDexterityOne;
-    public static int humanAttackTwo, humanDefenseTwo, humanMagicTwo, humanManaTwo, humanHealthTwo, humanDexterityTwo;
-    public static int baseHAOne, baseHATwo;
     public static JTextArea console;
     public static JScrollPane console2;
     public static JScrollPane console0;
@@ -61,13 +55,13 @@ public abstract class Main {
     public static JComboBox CharacterTwoPage2 = new JComboBox(ExportCharacterList.exportCharacterList());
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Makes window
         createWindow();
 
     }
 
-    private static void createWindow() {
+    private static void createWindow() throws IOException {
 
 
         JFrame frame = new JFrame("Battle exercise");
@@ -91,8 +85,6 @@ public abstract class Main {
                 String characterSecond  = String.valueOf(CharacterTwo.getItemAt(CharacterTwo.getSelectedIndex()));
                 resetWeapon(characterFirst);
                 resetWeapon(characterSecond);
-//                humanAttackOne = baseHAOne;
-//                humanAttackTwo = baseHATwo;
                 console001.setText("");
                 console002.setText("");
             }
@@ -105,23 +97,40 @@ public abstract class Main {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createUI(frame);
-        frame.setSize(600, 560);
+        frame.setSize(600, 750);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-    private static void createUI(final JFrame frame) {
+    private static void createUI(final JFrame frame) throws IOException {
 
         JTabbedPane tabbedPane = new JTabbedPane();
+        // 0panel
+        JPanel panel0 = new JPanel(false);
+        panel0.setBackground(Color.BLACK);
+        tabbedPane.addTab("Front", null, panel0, "Tab 0 tooltip");
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+//        panel0.setLayout(new GridLayout(0,1));
+        panel0.setLayout(new FlowLayout());
+        BufferedImage myPicture = ImageIO.read(new File(("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\portal.png")));
+        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        JLabel label0001 = new JLabel("NEXUS", SwingConstants.CENTER );
+        label0001.setFont(new Font("Serif", Font.BOLD, 60));
+        label0001.setForeground(Color.WHITE);
+        panel0.add(label0001);
+        panel0.add(picLabel);
+
+
+//        String url = ("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Homer.gif");
+//        Icon icon = new ImageIcon(url);
+//        JLabel label000 = new JLabel(icon);
+//        panel0.add(label000);
+
+
         // first panel
         JPanel panel1 = new JPanel(false);
         tabbedPane.addTab("Battle", null, panel1, "Tab 1 tooltip");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-
-//        filler = new JLabel(nameOne);
-//        filler5 = new JLabel(nameTwo);
-//        filler.setHorizontalAlignment(JLabel.CENTER);
-//        filler5.setHorizontalAlignment(JLabel.CENTER);
 
         JButton button0 = new JButton("Battle");
 
@@ -143,11 +152,11 @@ public abstract class Main {
                 String characterFirst  = String.valueOf(CharacterOne.getItemAt(CharacterOne.getSelectedIndex()));
                 String upperCaseCharacter = (String)exportCharacterStats(characterFirst)[1];
                 String constructorClassCharacter = CasingMethods.toTitleCaseOneWord(upperCaseCharacter);
-                //System.out.println(constructorClassCharacter);
+
                 String characterSecond  = String.valueOf(CharacterTwo.getItemAt(CharacterTwo.getSelectedIndex()));
                 String upperCaseCharacter00 = (String)exportCharacterStats(characterSecond)[1];
                 String constructorClassCharacter00 = CasingMethods.toTitleCaseOneWord(upperCaseCharacter00);
-                //System.out.println(constructorClassCharacter00);
+
                 //maak constructor aan met behulp van de 2 geselecteerde namen
                 Character characterOne = StringToConstructorSwitch.constructorClass(constructorClassCharacter, characterFirst);
                 Character characterTwo = StringToConstructorSwitch.constructorClass(constructorClassCharacter00, characterSecond);
@@ -182,15 +191,12 @@ public abstract class Main {
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
         frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
-//        filler2 = new JLabel(humanNameOne);
-//        filler3 = new JLabel(humanNameTwo);
         console001 = new JTextArea(10, 25);
         console002 = new JTextArea(10, 25);
 
         JButton button1 = new JButton("Save equipment Player One");
         JButton button2 = new JButton("Save equipment Player Two");
-//        filler2.setHorizontalAlignment(JLabel.CENTER);
-//        filler3.setHorizontalAlignment(JLabel.CENTER);
+
         console001.setAlignmentX((float)0.5);
         console002.setAlignmentX((float)0.5);
         panel2.setLayout(new GridLayout(2, 1, 10, 10));
@@ -216,8 +222,7 @@ public abstract class Main {
                 String[] weaponStats = {weaponEnum.getName(), String.valueOf(weaponEnum.getAttack())};
                 String characterSecond  = String.valueOf(CharacterOnePage2.getItemAt(CharacterOnePage2.getSelectedIndex()));
                 ExportData.storeData(weaponStats, characterSecond, WVS);
-//                baseHAOne = humanAttackOne;
-//                humanAttackOne = humanAttackOne + weaponEnum.getAttack();
+
             }
         });
         button2.addActionListener(new ActionListener() {
@@ -229,9 +234,6 @@ public abstract class Main {
                 String[] weaponStats = {weaponEnum.getName(), String.valueOf(weaponEnum.getAttack())};
                 String characterSecond  = String.valueOf(CharacterTwoPage2.getItemAt(CharacterTwoPage2.getSelectedIndex()));
                 ExportData.storeData(weaponStats, characterSecond, WVS);
-
-//                baseHATwo = humanAttackOne;
-//                humanAttackTwo = humanAttackTwo + weaponEnum.getAttack();
 
             }
         });
