@@ -6,6 +6,7 @@ import Game.ClassesCollection.Character;
 import Game.ClassesCollection.God;
 import Game.ClassesCollection.Human;
 import Game.ClassesCollection.StringToConstructorSwitch;
+import Game.StoryCollection.StoryContinue;
 import Game.StoryCollection.StorySnippets;
 import Game.enum_collection.CharacterClasses;
 import Game.enum_collection.CharacterSubClasses;
@@ -27,6 +28,8 @@ import java.util.Arrays;
 
 import static Game.CheckData.CasingMethods.toTitleCaseOneWord;
 import static Game.CheckData.InputName.inputName;
+import static Game.StoryCollection.StoryContinue.StoryContinues;
+import static Game.StoryCollection.StoryContinue.readFromStoryFile;
 import static Game.import_export_data.ExportData.resetWeapon;
 import static Game.import_export_data.ExportNameAndClass.exportCharacterStats;
 import static Game.import_export_data.ExportNameAndClass.exportWeaponStats;
@@ -62,9 +65,11 @@ public abstract class Main {
         // Makes window
         createWindow();
 
+
     }
 
     private static void createWindow() throws IOException {
+
 
 
         JFrame frame = new JFrame("Battle exercise");
@@ -106,6 +111,20 @@ public abstract class Main {
     }
 
     private static void createUI(final JFrame frame) throws IOException {
+        //creating file if first try
+        try {
+            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\Storytracker.txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+                StoryContinue.writeToStoryFile(0);
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        int trackTheStory = StoryContinue.readFromStoryFile();
 
         JTabbedPane tabbedPane = new JTabbedPane();
         // 0panel
@@ -122,6 +141,7 @@ public abstract class Main {
         panel0.add(label0001);
         panel0.add(picLabel);
         //storypanel
+
         JPanel panelStory = new JPanel(false);
         tabbedPane.addTab("Story", null, panelStory, "Tab 00 tooltip");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_0);
@@ -129,7 +149,7 @@ public abstract class Main {
         JButton buttonStory01 = new JButton("Continue");
         String[] arrayOfSTory;
         arrayOfSTory = StorySnippets.storySnippets();
-        JTextArea labelStory00 = new JTextArea( arrayOfSTory[0]);
+        JTextArea labelStory00 = new JTextArea( arrayOfSTory[trackTheStory]);
         labelStory00.setLineWrap(true);
         labelStory00.setLineWrap(true);
         labelStory00.setWrapStyleWord(true);
@@ -137,10 +157,16 @@ public abstract class Main {
         labelStory00.setEditable(false);
         panelStory.add(buttonStory01, BorderLayout.LINE_END);
         panelStory.add(labelStory00);
-        //produce first line of story
-//        String[] arrayOfSTory;
-//        arrayOfSTory = StorySnippets.storySnippets();
-//        labelStory00.setText(arrayOfSTory[0]);
+          buttonStory01.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                 StoryContinues();
+                 int trackStory = readFromStoryFile();
+                 String[] arrayOfSTory;
+                 arrayOfSTory = StorySnippets.storySnippets();
+                 labelStory00.setText(arrayOfSTory[trackStory]);
+                }
+          });
 
 
 
