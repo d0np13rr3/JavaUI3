@@ -1,0 +1,5 @@
+Queen Elizabeth
+HUMAN
+KNIGHT
+0000XP
+0000CURRENCY
