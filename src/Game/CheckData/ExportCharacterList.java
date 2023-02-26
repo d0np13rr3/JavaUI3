@@ -12,7 +12,7 @@ public class ExportCharacterList {
         ArrayList<String> names = new ArrayList<String>();
         String[] namesArray;
         try {
-            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\CharacterList.txt");
+            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\CharacterList.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();

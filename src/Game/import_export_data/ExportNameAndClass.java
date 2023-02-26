@@ -12,7 +12,7 @@ public class ExportNameAndClass {
         ArrayList<String> Stats = new ArrayList<String>();
         String[] statsArray;
         try {
-            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + name + "CharacterSaveCode.txt");
+            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + name + "CharacterSaveCode.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -35,7 +35,7 @@ public class ExportNameAndClass {
         ArrayList<String> Stats = new ArrayList<String>();
         String[] statsArray;
         try {
-            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + name + "WeaponSaveCode.txt");
+            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + name + "WeaponSaveCode.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();

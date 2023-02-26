@@ -6,10 +6,12 @@ import Game.ClassesCollection.Character;
 import Game.ClassesCollection.God;
 import Game.ClassesCollection.Human;
 import Game.ClassesCollection.StringToConstructorSwitch;
+import Game.StoryCollection.StorySnippets;
 import Game.enum_collection.CharacterClasses;
 import Game.enum_collection.CharacterSubClasses;
 import Game.enum_collection.WeaponEnum;
 import Game.import_export_data.ExportData;
+import Game.StoryCollection.StorySnippets.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 
 import static Game.CheckData.CasingMethods.toTitleCaseOneWord;
 import static Game.CheckData.InputName.inputName;
@@ -109,8 +112,7 @@ public abstract class Main {
         JPanel panel0 = new JPanel(false);
         panel0.setBackground(Color.BLACK);
         tabbedPane.addTab("Front", null, panel0, "Tab 0 tooltip");
-        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-//        panel0.setLayout(new GridLayout(0,1));
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_0);
         panel0.setLayout(new FlowLayout());
         BufferedImage myPicture = ImageIO.read(new File(("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\portal.png")));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
@@ -119,12 +121,27 @@ public abstract class Main {
         label0001.setForeground(Color.WHITE);
         panel0.add(label0001);
         panel0.add(picLabel);
+        //storypanel
+        JPanel panelStory = new JPanel(false);
+        tabbedPane.addTab("Story", null, panelStory, "Tab 00 tooltip");
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_0);
+        panelStory.setLayout(new BorderLayout());
+        JButton buttonStory01 = new JButton("Continue");
+        String[] arrayOfSTory;
+        arrayOfSTory = StorySnippets.storySnippets();
+        JTextArea labelStory00 = new JTextArea( arrayOfSTory[0]);
+        labelStory00.setLineWrap(true);
+        labelStory00.setLineWrap(true);
+        labelStory00.setWrapStyleWord(true);
+        labelStory00.setOpaque(false);
+        labelStory00.setEditable(false);
+        panelStory.add(buttonStory01, BorderLayout.LINE_END);
+        panelStory.add(labelStory00);
+        //produce first line of story
+//        String[] arrayOfSTory;
+//        arrayOfSTory = StorySnippets.storySnippets();
+//        labelStory00.setText(arrayOfSTory[0]);
 
-
-//        String url = ("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Homer.gif");
-//        Icon icon = new ImageIcon(url);
-//        JLabel label000 = new JLabel(icon);
-//        panel0.add(label000);
 
 
         // first panel

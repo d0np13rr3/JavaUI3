@@ -8,7 +8,7 @@ public class ExportData {
  public static void resetWeapon(String name){
         String spacesName = name.replaceAll(" ","_");
         try {
-        FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + spacesName +"WeaponSaveCode.txt",false);
+        FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + spacesName +"WeaponSaveCode.txt",false);
             myWriter.write("");
         myWriter.close();
         System.out.println("Successfully wrote to the file.");
@@ -23,7 +23,7 @@ public class ExportData {
         String spacesClass = itemClass.replaceAll(" ","_");
         //creating file
         try {
-            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + spacesName + spacesClass +".txt");
+            File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + spacesName + spacesClass +".txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -35,7 +35,7 @@ public class ExportData {
         }
         //writing to file
         try {
-            FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + spacesName + spacesClass +".txt");
+            FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + spacesName + spacesClass +".txt");
             for(String dataLine : data){
                 myWriter.write(dataLine + "\n");
             }
@@ -48,7 +48,7 @@ public class ExportData {
         // verdere dimensies toevoegen aan karakters
         if (spacesClass.equals("CharacterSaveCode")){
             try {
-                FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\" + spacesName +"CharacterSaveCode.txt",true);
+                FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + spacesName +"CharacterSaveCode.txt",true);
                 myWriter.write("0000XP" + "\n");
                 myWriter.write("0000CURRENCY" + "\n");
                 myWriter.close();
