@@ -4,6 +4,8 @@ import java.util.Random;
 
 import static Game.Main.*;
 
+import Game.import_export_data.*;
+
 public class Actions {
 
 
@@ -45,7 +47,10 @@ public class Actions {
             }
             playerTwoLife = playerTwoLife - AttackByOne;
             if (playerTwoLife <= 0){
+                int calculatedExperience = ExperienceActions.calculateExperience(ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameOne)),ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameTwo)));
+                ExperienceActions.importExperienceStats(calculatedExperience, humanNameOne);
                 console.append(humanNameOne + " attacked for " + AttackByOne + ". " + "\n" + humanNameTwo + " lost the battle.");
+                console.append(humanNameOne + " gained " + calculatedExperience + " experience.");
                 break;
             }else {
                 console.append(humanNameOne + " attacked for " + AttackByOne + ". " + humanNameTwo + " has " + playerTwoLife + " health left." + "\n");
@@ -58,7 +63,10 @@ public class Actions {
             }
             playerOneLife = playerOneLife - AttackByTwo;
             if (playerOneLife <= 0){
+                int calculatedExperience = ExperienceActions.calculateExperience(ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameTwo)),ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameOne)));
+                ExperienceActions.importExperienceStats(calculatedExperience, humanNameTwo);
                 console.append(humanNameTwo + " attacked for " + AttackByTwo + ". " + "\n" + humanNameOne + " lost the battle.");
+                console.append(humanNameTwo + " gained " + calculatedExperience + " experience.");
                 break;
 
             }else {

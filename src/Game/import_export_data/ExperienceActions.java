@@ -1,6 +1,6 @@
 package Game.import_export_data;
 
-import Game.CheckData.ExportCharacterList;
+import Game.import_export_data.ImportData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,7 +25,7 @@ public class ExperienceActions {
             }
             myReader.close();
             statsArray = Stats.toArray(new String[0]);
-            int moneyToReturnString = Integer.parseInt(statsArray[3].substring(0,4));
+            int moneyToReturnString = Integer.parseInt(statsArray[3].substring(0,4).replaceAll("0",""));
             return moneyToReturnString;
 
         } catch (
@@ -34,14 +34,16 @@ public class ExperienceActions {
             e.printStackTrace();
         }return 0;
     }
-    public static void importExperienceStats(int moneyToAdd, String spacesName){
+    public static void importExperienceStats(int expToAdd, String spacesName){
         String name = spacesName.replaceAll(" ","_");
 
         exportExperienceStats(name);
-        int sumOfMoney = moneyToAdd + exportExperienceStats(name);
-        String currencyMoney = sumOfMoney + "XP";
-        String charArray[] = ExportCharacterList.exportCharacterList();
-        charArray[3] = currencyMoney;
+        int sumOfExp = expToAdd + exportExperienceStats(name);
+        String formatExp = String.valueOf(sumOfExp);
+        String formatZeroes = ImportData.addRealTrailingZeroes(formatExp);
+        String addExp = sumOfExp + "XP";
+        String charArray[] = ExportNameAndClass.exportCharacterStats(name);
+        charArray[3] = addExp;
         //writing to file
         try {
             FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + spacesName + "CharacterSaveCode.txt");
@@ -59,14 +61,42 @@ public class ExperienceActions {
 
     }
 
-    public int calculateExperience(int levelProtagonist, int levelAntagonist){
-
+    public static int calculateExperience(int levelProtagonist, int levelAntagonist){
         int levelDifference = levelAntagonist - levelProtagonist;
         Random random = new Random();
-        int randomInteger = random.nextInt(10);
-        int experienceToReturn = levelDifference * randomInteger;
+        int randomInteger = random.nextInt(15);
+        int randomInteger00 = random.nextInt(5);
+        int experienceToReturn = (levelDifference * randomInteger) + (levelProtagonist * randomInteger00);
 
 
         return experienceToReturn;
     }
-}
+    public static int levelCalculator(int exp){
+            int level = 0;
+            if(exp >= 0 && exp < 10) {
+                level = 1;
+                return level;
+            }else if (exp >= 10 && exp < 50){
+                level = 2;
+                return level;
+            }else if (exp >= 50 && exp < 125){
+                level = 3;
+                return level;
+            }else if (exp >= 125 && exp < 275){
+                level = 4;
+                return level;
+            }else{
+                return 0;
+            }
+
+        }
+
+
+
+        }
+
+
+
+
+
+

@@ -25,7 +25,7 @@ public class MoneyActions {
             }
             myReader.close();
             statsArray = Stats.toArray(new String[0]);
-            int moneyToReturnString = Integer.parseInt(statsArray[4].substring(0,4));
+            int moneyToReturnString = Integer.parseInt(statsArray[4].substring(0,4).replaceAll("0",""));
             return moneyToReturnString;
 
         } catch (
@@ -39,8 +39,10 @@ public class MoneyActions {
 
         exportMoneyStats(name);
         int sumOfMoney = moneyToAdd + exportMoneyStats(name);
-        String currencyMoney = sumOfMoney + "CURRENCY";
-        String charArray[] = ExportCharacterList.exportCharacterList();
+        String formatExp = String.valueOf(sumOfMoney);
+        String formatZeroes = ImportData.addRealTrailingZeroes(formatExp);
+        String currencyMoney = formatZeroes + "CURRENCY";
+        String charArray[] = ExportNameAndClass.exportCharacterStats(name);
         charArray[4] = currencyMoney;
         //writing to file
         try {
@@ -57,13 +59,11 @@ public class MoneyActions {
 
     }
 
-    public int calculateMoney(int levelProtagonist, int levelAntagonist){
-
-
-        int levelDifference = levelAntagonist - levelProtagonist;
+    public int calculateMoney(int levelProtagonist){
         Random random = new Random();
         int randomInteger = random.nextInt(10);
-        int moneyToReturn = levelDifference * randomInteger;
+        int randomInteger00 = random.nextInt(5);
+        int moneyToReturn = (levelProtagonist * randomInteger) + (levelProtagonist * randomInteger00);
 
 
         return moneyToReturn;

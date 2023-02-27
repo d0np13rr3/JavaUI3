@@ -49,8 +49,8 @@ public class ExportData {
         if (spacesClass.equals("CharacterSaveCode")){
             try {
                 FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + spacesName +"CharacterSaveCode.txt",true);
-                myWriter.write("0000XP" + "\n");
-                myWriter.write("0000CURRENCY" + "\n");
+                myWriter.write("0001XP" + "\n");
+                myWriter.write("0001CURRENCY" + "\n");
                 myWriter.close();
                 System.out.println("Successfully wrote to the file.");
             } catch (IOException e) {
