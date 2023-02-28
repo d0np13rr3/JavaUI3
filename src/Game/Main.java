@@ -30,6 +30,7 @@ import static Game.CheckData.CasingMethods.toTitleCaseOneWord;
 import static Game.CheckData.InputName.inputName;
 import static Game.StoryCollection.StoryContinue.StoryContinues;
 import static Game.StoryCollection.StoryContinue.readFromStoryFile;
+import static Game.import_export_data.ExperienceActions.levelCalculator;
 import static Game.import_export_data.ExportData.resetWeapon;
 import static Game.import_export_data.ExportNameAndClass.exportCharacterStats;
 import static Game.import_export_data.ExportNameAndClass.exportWeaponStats;
@@ -56,26 +57,22 @@ public abstract class Main {
     //creates Character list
     ExportCharacterList exportCharacterList = new ExportCharacterList();
     public static JComboBox CharacterOne = new JComboBox(ExportCharacterList.exportCharacterList());
-    public static JComboBox CharacterTwo = new JComboBox(ExportCharacterList.exportCharacterList());
+    public static JComboBox CharacterTwo = new JComboBox(ExportCharacterList.exportReverseCharacterList());
     public static JComboBox CharacterOnePage2 = new JComboBox(ExportCharacterList.exportCharacterList());
-    public static JComboBox CharacterTwoPage2 = new JComboBox(ExportCharacterList.exportCharacterList());
+    public static JComboBox CharacterTwoPage2 = new JComboBox(ExportCharacterList.exportReverseCharacterList());
+    public static JComboBox CharacterInformationPage = new JComboBox(ExportCharacterList.exportCharacterList());
 
 
     public static void main(String[] args) throws IOException {
         // Makes window
         createWindow();
-
-
     }
 
     private static void createWindow() throws IOException {
 
-
-
-        JFrame frame = new JFrame("Battle exercise");
-
+        JFrame frame = new JFrame("Battle Royal - Crossover");
         JMenuBar menubar = new JMenuBar();
-        JMenu menu = new JMenu("Actions");
+        JMenu menu = new JMenu("Battle Menu");
         JMenuItem size00 = new JMenuItem("Reset Battle - on first page");
         JMenuItem size01 = new JMenuItem("Reset Equipment - on first page");
 
@@ -230,7 +227,7 @@ public abstract class Main {
 
         // second panel
         JPanel panel2 = new JPanel(false);
-        tabbedPane.addTab("Check status", null, panel2, "Tab 2 tooltip");
+        tabbedPane.addTab("Add equipment", null, panel2, "Tab 2 tooltip");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
         frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
@@ -303,11 +300,9 @@ public abstract class Main {
         contentPane.add(label02);
 
         JLabel label03 = new JLabel("A story unfolds ");
-
         contentPane.add(label03);
 
         JButton button11 = new JButton("Save character");
-
         contentPane.add(button11);
 
         //deze lijnen geven de positie aan tegenover het paneel
@@ -381,14 +376,41 @@ public abstract class Main {
         filler4 = new JLabel("          What can we learn?", SwingConstants.CENTER);
         console01 = new JTextArea(10, 25);
         console0 = new JScrollPane(console01);
-        JButton button00 = new JButton("Get Information");
-        ItemList = new JComboBox();
+        JButton button0099 = new JButton("Get Information");
+        ItemList = new JComboBox(CharacterInformationPage.getModel());
 
         panel04.setLayout(new BorderLayout());
         panel04.add(ItemList, BorderLayout.NORTH);
         panel04.add(filler4, BorderLayout.LINE_START);
-        panel04.add(button00, BorderLayout.SOUTH);
+        panel04.add(button0099, BorderLayout.SOUTH);
         panel04.add(console0, BorderLayout.LINE_END);
+        button0099.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            console01.setText("");
+            //get and check and add name
+            String characterInformation  = String.valueOf(ItemList.getItemAt(ItemList.getSelectedIndex()));
+            //set console
+            //console01.setText(characterInformation + "\n");
+            String[] characterStats = exportCharacterStats(characterInformation);
+            for (String s: characterStats){
+                console01.append(s + "\n");
+            }
+            try {
+                String[] weaponStats = exportWeaponStats(characterInformation);
+                for (String s : weaponStats) {
+                    console01.append(s+ "\n");
+                }
+            }catch (Exception ee) {
+                console01.append("No weapons there.\n");
+            }
+
+            int returnedExperience = Integer.parseInt(characterStats[3].substring(0,4).replaceFirst("^0+(?!$)", ""));
+            console01.append(levelCalculator(returnedExperience) + " is current level.");
+        }
+    });
+
+
 
     }
 

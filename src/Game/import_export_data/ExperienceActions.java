@@ -25,7 +25,7 @@ public class ExperienceActions {
             }
             myReader.close();
             statsArray = Stats.toArray(new String[0]);
-            int moneyToReturnString = Integer.parseInt(statsArray[3].substring(0,4).replaceAll("0",""));
+            int moneyToReturnString = Integer.parseInt(statsArray[3].substring(0,4).replaceFirst("^0+(?!$)", ""));
             return moneyToReturnString;
 
         } catch (
@@ -41,7 +41,7 @@ public class ExperienceActions {
         int sumOfExp = expToAdd + exportExperienceStats(name);
         String formatExp = String.valueOf(sumOfExp);
         String formatZeroes = ImportData.addRealTrailingZeroes(formatExp);
-        String addExp = sumOfExp + "XP";
+        String addExp = formatZeroes + "XP";
         String charArray[] = ExportNameAndClass.exportCharacterStats(name);
         charArray[3] = addExp;
         //writing to file
@@ -56,13 +56,13 @@ public class ExperienceActions {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-
-
     }
 
     public static int calculateExperience(int levelProtagonist, int levelAntagonist){
         int levelDifference = levelAntagonist - levelProtagonist;
+        if (levelDifference < 0){
+            levelDifference = 1;
+        }
         Random random = new Random();
         int randomInteger = random.nextInt(15);
         int randomInteger00 = random.nextInt(5);

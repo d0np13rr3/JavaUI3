@@ -25,7 +25,7 @@ public class MoneyActions {
             }
             myReader.close();
             statsArray = Stats.toArray(new String[0]);
-            int moneyToReturnString = Integer.parseInt(statsArray[4].substring(0,4).replaceAll("0",""));
+            int moneyToReturnString = Integer.parseInt(statsArray[4].substring(0,4).replaceFirst("^0+(?!$)", ""));
             return moneyToReturnString;
 
         } catch (
@@ -51,7 +51,7 @@ public class MoneyActions {
                 myWriter.write(dataLine + "\n");
             }
             myWriter.close();
-            System.out.println("Successfully wrote to the file.");
+            System.out.println(currencyMoney + " Successfully wrote to the money file.");
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -59,7 +59,7 @@ public class MoneyActions {
 
     }
 
-    public int calculateMoney(int levelProtagonist){
+    public static int calculateMoney(int levelProtagonist){
         Random random = new Random();
         int randomInteger = random.nextInt(10);
         int randomInteger00 = random.nextInt(5);
