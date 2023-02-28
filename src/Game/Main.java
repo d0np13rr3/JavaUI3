@@ -10,6 +10,7 @@ import Game.StoryCollection.StoryContinue;
 import Game.StoryCollection.StorySnippets;
 import Game.enum_collection.CharacterClasses;
 import Game.enum_collection.CharacterSubClasses;
+import Game.enum_collection.RealEstate;
 import Game.enum_collection.WeaponEnum;
 import Game.import_export_data.ExportData;
 import Game.StoryCollection.StorySnippets.*;
@@ -30,6 +31,7 @@ import static Game.CheckData.CasingMethods.toTitleCaseOneWord;
 import static Game.CheckData.InputName.inputName;
 import static Game.StoryCollection.StoryContinue.StoryContinues;
 import static Game.StoryCollection.StoryContinue.readFromStoryFile;
+import static Game.enum_collection.RealEstate.*;
 import static Game.import_export_data.ExperienceActions.levelCalculator;
 import static Game.import_export_data.ExportData.resetWeapon;
 import static Game.import_export_data.ExportNameAndClass.exportCharacterStats;
@@ -369,8 +371,50 @@ public abstract class Main {
         frame.setVisible(true);
 
         // fourth panel
+        JPanel panel05 = new JPanel(false);
+        tabbedPane.addTab("Real Estate", null, panel05, "Tab 4 tooltip");
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
+
+
+        panel05.setLayout(new GridLayout(8, 2, 10, 10));
+        JLabel label501 = new JLabel(WOODEN_CABINE.toString()+ ": " + WOODEN_CABINE.getCost() + " coins.");
+        JButton button501 = new JButton("Buy this property");
+        JLabel label502 = new JLabel(HOUSE.toString()+ ": " + HOUSE.getCost()+ " coins.");
+        JButton button502 = new JButton("Buy this property");
+        JLabel label503 = new JLabel(VILLA.toString()+ ": " + VILLA.getCost()+ " coins.");
+        JButton button503 = new JButton("Buy this property");
+        JLabel label504 = new JLabel(APARTMENT.toString()+ ": " + APARTMENT.getCost()+ " coins.");
+        JButton button504 = new JButton("Buy this property");
+        JLabel label505 = new JLabel(MANSION.toString()+ ": " + MANSION.getCost()+ " coins.");
+        JButton button505 = new JButton("Buy this property");
+        JLabel label506 = new JLabel(CASTLE.toString()+ ": " + CASTLE.getCost()+ " coins.");
+        JButton button506 = new JButton("Buy this property");
+        JLabel label507 = new JLabel(PALACE.toString()+ ": " + PALACE.getCost()+ " coins.");
+        JButton button507 = new JButton("Buy this property");
+        JLabel label508 = new JLabel(WAREHOUSE.toString()+ ": " + WAREHOUSE.getCost()+ " coins.");
+        JButton button508 = new JButton("Buy this property");
+
+        panel05.add(label501 );
+        panel05.add(button501);
+        panel05.add(label502);
+        panel05.add(button502);
+        panel05.add(label503);
+        panel05.add(button503);
+        panel05.add(label504);
+        panel05.add(button504);
+        panel05.add(label505);
+        panel05.add(button505);
+        panel05.add(label506);
+        panel05.add(button506);
+        panel05.add(label507);
+        panel05.add(button507);
+        panel05.add(label508);
+        panel05.add(button508);
+
+
+        // fifth panel
         JPanel panel04 = new JPanel(false);
-        tabbedPane.addTab("Information", null, panel04, "Tab 3 tooltip");
+        tabbedPane.addTab("Information", null, panel04, "Tab 5 tooltip");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
 
         filler4 = new JLabel("          What can we learn?", SwingConstants.CENTER);
