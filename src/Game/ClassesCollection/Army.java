@@ -37,8 +37,9 @@ public class Army {
         String returned_value = "";
         for(Map.Entry<String, Character> key : armyToAddOne.entrySet()) {
             if (key.getValue().getHealth() == Integer.parseInt(valueHealth)){
-                armyToAddOne.remove(key);
-                returned_value = String.valueOf(key);
+                returned_value = key.getValue().getName();
+                armyToAddOne.remove(returned_value);
+                //returned_value = String.valueOf(key);
                 break;
             }
         }
@@ -60,14 +61,21 @@ public class Army {
         return total;
     }
     static ArrayList<Integer> getHealthFromArmyUniqueSet(HashMap<String, Character> armyToAddOne, Army army) {
-        //This prodcues a list of unique values
-        Set<Integer> listOfKeysHealth = new HashSet<Integer>();
+//        //This prodcues a list of unique values
+//        Set<Integer> listOfKeysHealth = new HashSet<Integer>();
+//        for(Map.Entry<String, Character> key : armyToAddOne.entrySet()) {
+//            listOfKeysHealth.add(key.getValue().getHealth());
+//        }
+//        ArrayList<Integer> UniqueHealthToCollect = new ArrayList<Integer> (listOfKeysHealth);
+//        Collections.reverse(UniqueHealthToCollect);
+//        return UniqueHealthToCollect;
+
+        ArrayList<Integer> HealthToCollect = new ArrayList<Integer>();
         for(Map.Entry<String, Character> key : armyToAddOne.entrySet()) {
-            listOfKeysHealth.add(key.getValue().getHealth());
+            HealthToCollect.add(key.getValue().getHealth());
         }
-        ArrayList<Integer> UniqueHealthToCollect = new ArrayList<Integer> (listOfKeysHealth);
-        Collections.reverse(UniqueHealthToCollect);
-        return UniqueHealthToCollect;
+        Collections.reverse(HealthToCollect);
+        return HealthToCollect;
     }
     static int getDefenseFromArmy(HashMap<String, Character> armyToAddOne, Army army) {
         ArrayList<Integer> listOfKeysDefense = new ArrayList<Integer>();
@@ -104,7 +112,7 @@ public class Army {
                 damageDone1 = 0;
             }
             startArmyTwo = startArmyTwo - damageDone1;
-            res = res + damageDone1 + " damage done " + startArmyTwo + " army 2 health \n";
+            res = res + damageDone1 + " damage done. " + startArmyTwo + " army 2 health. " + armyTwo.size() + " size of army 2\n";
             //determine which values of health are in army two
             ArrayList<Integer> CollectedHealthFromArmyTwo = getHealthFromArmyUniqueSet(armyTwo, armyTwoMade);
             //loop over damage to remove characters starting with lowest health
@@ -122,6 +130,9 @@ public class Army {
             }
             res = res + "armyOne attacked = " + attackOne + ", armyTwo defense = " + defenseTwo + "\n";
             res = res + "/*--------------------------------------------*/\n";
+            if(startArmyTwo <= 0){
+                break;
+            }
 
 
 
@@ -134,10 +145,11 @@ public class Army {
                 damageDone2 = 0;
             }
             startArmyOne = startArmyOne - damageDone2;
-            res = res + damageDone2 + " damage done " + startArmyOne + " army one health \n";
+            res = res + damageDone2 + " damage done. " + startArmyOne + " army one health." + armyOne.size() + " size of army 1\n";
             //determine which values of health are in army two
             ArrayList<Integer> CollectedHealthFromArmyOne = getHealthFromArmyUniqueSet(armyOne, armyOneMade);
             //loop over damage to remove characters starting with lowest health
+            //infinite loop over this---------------------//
             while(damageDone2 != 0){
                 //removing characters
                 for (int health: CollectedHealthFromArmyOne){
@@ -152,6 +164,9 @@ public class Army {
             }
             res = res + "armyTwo attacked = " + attackTwo + ", armyOne defense = " + defenseOne + "\n";
             res = res + "/*--------------------------------------------*/\n";
+            if(startArmyOne <= 0){
+                break;
+            }
             //System.out.println("Two vs One");
             }
 
