@@ -37,8 +37,9 @@ public class Army {
         String returned_value = "";
         for(Map.Entry<String, Character> key : armyToAddOne.entrySet()) {
             if (key.getValue().getHealth() == Integer.parseInt(valueHealth)){
-                armyToAddOne.remove(key);
-                returned_value = String.valueOf(key);
+                returned_value = key.getValue().getName();
+                armyToAddOne.remove(returned_value);
+                //returned_value = String.valueOf(key);
                 break;
             }
         }
@@ -60,14 +61,21 @@ public class Army {
         return total;
     }
     static ArrayList<Integer> getHealthFromArmyUniqueSet(HashMap<String, Character> armyToAddOne, Army army) {
-        //This prodcues a list of unique values
-        Set<Integer> listOfKeysHealth = new HashSet<Integer>();
+//        //This prodcues a list of unique values
+//        Set<Integer> listOfKeysHealth = new HashSet<Integer>();
+//        for(Map.Entry<String, Character> key : armyToAddOne.entrySet()) {
+//            listOfKeysHealth.add(key.getValue().getHealth());
+//        }
+//        ArrayList<Integer> UniqueHealthToCollect = new ArrayList<Integer> (listOfKeysHealth);
+//        Collections.reverse(UniqueHealthToCollect);
+//        return UniqueHealthToCollect;
+
+        ArrayList<Integer> HealthToCollect = new ArrayList<Integer>();
         for(Map.Entry<String, Character> key : armyToAddOne.entrySet()) {
-            listOfKeysHealth.add(key.getValue().getHealth());
+            HealthToCollect.add(key.getValue().getHealth());
         }
-        ArrayList<Integer> UniqueHealthToCollect = new ArrayList<Integer> (listOfKeysHealth);
-        Collections.reverse(UniqueHealthToCollect);
-        return UniqueHealthToCollect;
+        Collections.reverse(HealthToCollect);
+        return HealthToCollect;
     }
     static int getDefenseFromArmy(HashMap<String, Character> armyToAddOne, Army army) {
         ArrayList<Integer> listOfKeysDefense = new ArrayList<Integer>();
@@ -103,28 +111,44 @@ public class Army {
             if (damageDone1 <= 0) {
                 damageDone1 = 0;
             }
+            //System.out.println("/*--------------------------------------------*/");
+            //System.out.println(damageDone1 + "damageDone1 before Start");
             startArmyTwo = startArmyTwo - damageDone1;
-            res = res + damageDone1 + " damage done " + startArmyTwo + " army 2 health \n";
+            res = res + damageDone1 + " damage done by army 1. " + startArmyTwo + " army 2 health left. " + armyTwo.size() + " size of army 2\n";
             //determine which values of health are in army two
             ArrayList<Integer> CollectedHealthFromArmyTwo = getHealthFromArmyUniqueSet(armyTwo, armyTwoMade);
             //loop over damage to remove characters starting with lowest health
-            while(damageDone1 != 0){
+            while(damageDone1 > 0){
+                if(CollectedHealthFromArmyTwo.size() == 0){
+                    break;
+                }
+                //System.out.println("/*--------------------------------------------*/");
+                //System.out.println(damageDone1 + "damageDone1 Start");
                 //removing characters
                 for (int health: CollectedHealthFromArmyTwo){
                 res = res + removeCharacterFromDictByValue(armyTwo, String.valueOf(health)) + " died. \n";
                 //if at a certain moment the health is to high compared to soldier health value needs to lower that health
                 damageDone1 = damageDone1 - health;
+                if (damageDone1 == 0){
+                    break;
+                }
+                //System.out.println(damageDone1 + "damageDone1 after  - health");
                 if(health > damageDone1){
+                    //System.out.println(health + " health in comparison");
+                    //System.out.println(damageDone1 + "damageDone1 in comparison");
                     DamageOneToTransfer = damageDone1;
                     damageDone1 = 0;
+                    break;
+                    //System.out.println(damageDone1 + "damageDone1 after declaration");
+                    //System.out.println("/*--------------------------------------------*/");
                 }
                 }
             }
-            res = res + "armyOne attacked = " + attackOne + ", armyTwo defense = " + defenseTwo + "\n";
+            res = res + "armyOne attacked = " + attackOne + ", armyTwo has defense = " + defenseTwo + "\n";
             res = res + "/*--------------------------------------------*/\n";
-
-
-
+            if(startArmyTwo <= 0){
+                break;
+            }
 
             //second army
             int defenseOne = armyOneMade.getDefenseFromArmy(armyOne, armyOneMade);
@@ -134,24 +158,41 @@ public class Army {
                 damageDone2 = 0;
             }
             startArmyOne = startArmyOne - damageDone2;
-            res = res + damageDone2 + " damage done " + startArmyOne + " army one health \n";
+            res = res + damageDone2 + " damage done by army two. " + startArmyOne + " army one health." + armyOne.size() + " size of army 1\n";
             //determine which values of health are in army two
             ArrayList<Integer> CollectedHealthFromArmyOne = getHealthFromArmyUniqueSet(armyOne, armyOneMade);
             //loop over damage to remove characters starting with lowest health
-            while(damageDone2 != 0){
+            //infinite loop over this---------------------//
+            while(damageDone2 > 0){
+                if(CollectedHealthFromArmyOne.size() == 0){
+                    break;
+                }
+                //System.out.println(damageDone2 + "damageDone2 Start");
+                //System.out.println(CollectedHealthFromArmyOne + "CollectedHealthFromArmyOne");
                 //removing characters
                 for (int health: CollectedHealthFromArmyOne){
+                    //System.out.println(health + "health in army one");
                     res = res + removeCharacterFromDictByValue(armyOne, String.valueOf(health)) + " died. \n";
                     //if at a certain moment the health is to high compared to soldier health value needs to lower that health
-                    damageDone2 = damageDone2 - health;
+                    damageDone2 = damageDone2 + DamageTwoToTransfer - health;
+                    if (damageDone2 == 0){
+                        break;
+                    }
+                    //System.out.println(damageDone2 + "damageDone2 after  - health");
                     if(health > damageDone2){
+                        //System.out.println(health + " health in comparison");
+                        //System.out.println(damageDone2 + "damageDone2 in comparison");
                         DamageTwoToTransfer = damageDone2;
                         damageDone2 = 0;
+                        break;
                     }
                 }
             }
-            res = res + "armyTwo attacked = " + attackTwo + ", armyOne defense = " + defenseOne + "\n";
+            res = res + "armyTwo attacked = " + attackTwo + ", armyOne  has defense = " + defenseOne + "\n";
             res = res + "/*--------------------------------------------*/\n";
+            if(startArmyOne <= 0){
+                break;
+            }
             //System.out.println("Two vs One");
             }
 
