@@ -8,11 +8,11 @@ public class Elf extends Character{
     private String name;
     Actions action = new Actions();
     public Elf(String name, Actions action){
-        health = 100;
-        attack = 10;
+        health = 250;
+        attack = 25;
         magic = 0;
         mana = 0;
-        dexterity = 25;
+        dexterity = 50;
         defense = 10;
 
         this.name = name;

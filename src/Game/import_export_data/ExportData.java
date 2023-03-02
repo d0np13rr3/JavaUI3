@@ -19,10 +19,27 @@ public class ExportData {
    }
 
     public static void storeData(String[] data, String itemName, String itemClass) {
+        System.out.println(itemClass + " before");
         String spacesName = itemName.replaceAll(" ","_");
         String spacesClass = itemClass.replaceAll(" ","_");
-        //creating file
-        try {
+        System.out.println(itemClass + " after");
+        //first check on real estate
+        if(itemClass.equals("RealEstateSaveCode")) {
+            try {
+                FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + spacesName + "RealEstateSaveCode.txt", true);
+                for (String dataLine : data) {
+                    myWriter.write(dataLine + "\n");
+                }
+                myWriter.close();
+                System.out.println("Successfully wrote to the Real Estate file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        }
+        else {
+            //creating file
+            try {
             File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + spacesName + spacesClass +".txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
@@ -40,7 +57,7 @@ public class ExportData {
                 myWriter.write(dataLine + "\n");
             }
             myWriter.close();
-            System.out.println("Successfully wrote to the file.");
+            System.out.println("Successfully wrote to the core name/class file.");
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -57,6 +74,7 @@ public class ExportData {
                 System.out.println("An error occurred.");
                 e.printStackTrace();
             }
+        }
         }
 
     }

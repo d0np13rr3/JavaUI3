@@ -8,12 +8,12 @@ import Game.Actions;
         private String name;
         Actions action = new Actions();
         public Werewolf(String name, Actions action){
-            health = 100;
-            attack = 10;
+            health = 150;
+            attack = 50;
             magic = 0;
             mana = 0;
-            dexterity = 25;
-            defense = 10;
+            dexterity = 50;
+            defense = 25;
 
             this.name = name;
         }

@@ -13,10 +13,6 @@ public class StoryContinue {
     public static void infoBox(String infoMessage, String titleBar)
     {
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
-//        JOptionPane.showMessageDialog(null,
-//                "ALERT MESSAGE",
-//                "TITLE",
-//                JOptionPane.WARNING_MESSAGE);
     }
     public static void writeToStoryFile(int tracker){
         //writing to file

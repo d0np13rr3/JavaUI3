@@ -9,11 +9,11 @@ public class Demon extends Character{
     Actions action = new Actions();
     public Demon(String name, Actions action){
         health = 100;
-        attack = 10;
-        magic = 0;
-        mana = 0;
+        attack = 100;
+        magic = 50;
+        mana = 50;
         dexterity = 25;
-        defense = 10;
+        defense = 50;
 
         this.name = name;
     }

@@ -2,18 +2,17 @@ package Game.ClassesCollection;
 
 import Game.Actions;
 
-
-public class Orc extends Character{
+public class Goblin extends Character{
     private int health, attack, magic, mana, dexterity, defense;
     private String name;
     Actions action = new Actions();
-    public Orc(String name, Actions action){
-        health = 200;
+    public Goblin(String name, Actions action){
+        health = 20;
         attack = 10;
         magic = 0;
         mana = 0;
-        dexterity = 10;
-        defense = 50;
+        dexterity = 25;
+        defense = 10;
 
         this.name = name;
     }

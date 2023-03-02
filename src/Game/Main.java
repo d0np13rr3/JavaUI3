@@ -3,17 +3,13 @@ package Game;
 import Game.CheckData.CasingMethods;
 import Game.CheckData.ExportCharacterList;
 import Game.ClassesCollection.Character;
-import Game.ClassesCollection.God;
-import Game.ClassesCollection.Human;
 import Game.ClassesCollection.StringToConstructorSwitch;
 import Game.StoryCollection.StoryContinue;
 import Game.StoryCollection.StorySnippets;
 import Game.enum_collection.CharacterClasses;
 import Game.enum_collection.CharacterSubClasses;
-import Game.enum_collection.RealEstate;
 import Game.enum_collection.WeaponEnum;
 import Game.import_export_data.ExportData;
-import Game.StoryCollection.StorySnippets.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,10 +20,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
 
-import static Game.CheckData.CasingMethods.toTitleCaseOneWord;
 import static Game.CheckData.InputName.inputName;
 import static Game.StoryCollection.StoryContinue.StoryContinues;
 import static Game.StoryCollection.StoryContinue.readFromStoryFile;
@@ -36,12 +29,14 @@ import static Game.import_export_data.ExperienceActions.levelCalculator;
 import static Game.import_export_data.ExportData.resetWeapon;
 import static Game.import_export_data.ExportNameAndClass.exportCharacterStats;
 import static Game.import_export_data.ExportNameAndClass.exportWeaponStats;
+import static Game.import_export_data.MoneyActions.importMoneyStatsSubtract;
 
 
 public abstract class Main {
     //constants
     static final String CVS = "CharacterSaveCode";
     static final String WVS = "WeaponSaveCode";
+    static final String RVS = "RealEstateSaveCode";
     //variables
     public static JTextArea console;
     public static JScrollPane console2;
@@ -132,7 +127,7 @@ public abstract class Main {
         tabbedPane.addTab("Front", null, panel0, "Tab 0 tooltip");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_0);
         panel0.setLayout(new FlowLayout());
-        BufferedImage myPicture = ImageIO.read(new File(("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\portal.png")));
+        BufferedImage myPicture = ImageIO.read(new File(("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Images\\portal.png")));
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
         JLabel label0001 = new JLabel("NEXUS", SwingConstants.CENTER );
         label0001.setFont(new Font("Serif", Font.BOLD, 60));
@@ -350,7 +345,6 @@ public abstract class Main {
         layout.putConstraint(SpringLayout.NORTH, button11,36,SpringLayout.NORTH, label03);
 
         button11.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 //get and check and add name
@@ -379,22 +373,70 @@ public abstract class Main {
         panel05.setLayout(new GridLayout(8, 2, 10, 10));
         JLabel label501 = new JLabel(WOODEN_CABINE.toString()+ ": " + WOODEN_CABINE.getCost() + " coins.");
         JButton button501 = new JButton("Buy this property");
+        button501.addActionListener(e ->{
+            String[] listChar = ExportCharacterList.exportCharacterList();
+            String boss = listChar[0];
+            String answer = importMoneyStatsSubtract(Integer.parseInt(WOODEN_CABINE.getCost()), boss);
+            buyIfEnoughFunds(boss, answer, new String[]{WOODEN_CABINE.toString()});
+        });
         JLabel label502 = new JLabel(HOUSE.toString()+ ": " + HOUSE.getCost()+ " coins.");
         JButton button502 = new JButton("Buy this property");
+        button502.addActionListener(e ->{
+            String[] listChar = ExportCharacterList.exportCharacterList();
+            String boss = listChar[0];
+            String answer = importMoneyStatsSubtract(Integer.parseInt(HOUSE.getCost()), boss);
+            buyIfEnoughFunds(boss, answer, new String[]{HOUSE.toString()});
+        });
         JLabel label503 = new JLabel(VILLA.toString()+ ": " + VILLA.getCost()+ " coins.");
         JButton button503 = new JButton("Buy this property");
+        button503.addActionListener(e ->{
+            String[] listChar = ExportCharacterList.exportCharacterList();
+            String boss = listChar[0];
+            String answer = importMoneyStatsSubtract(Integer.parseInt(VILLA.getCost()), boss);
+            buyIfEnoughFunds(boss, answer, new String[]{VILLA.toString()});
+        });
         JLabel label504 = new JLabel(APARTMENT.toString()+ ": " + APARTMENT.getCost()+ " coins.");
         JButton button504 = new JButton("Buy this property");
+        button504.addActionListener(e ->{
+            String[] listChar = ExportCharacterList.exportCharacterList();
+            String boss = listChar[0];
+            String answer = importMoneyStatsSubtract(Integer.parseInt(APARTMENT.getCost()), boss);
+            buyIfEnoughFunds(boss, answer, new String[]{APARTMENT.toString()});
+        });
         JLabel label505 = new JLabel(MANSION.toString()+ ": " + MANSION.getCost()+ " coins.");
         JButton button505 = new JButton("Buy this property");
+        button505.addActionListener(e ->{
+            String[] listChar = ExportCharacterList.exportCharacterList();
+            String boss = listChar[0];
+            String answer = importMoneyStatsSubtract(Integer.parseInt(MANSION.getCost()), boss);
+            buyIfEnoughFunds(boss, answer, new String[]{MANSION.toString()});
+        });
         JLabel label506 = new JLabel(CASTLE.toString()+ ": " + CASTLE.getCost()+ " coins.");
         JButton button506 = new JButton("Buy this property");
+        button506.addActionListener(e ->{
+            String[] listChar = ExportCharacterList.exportCharacterList();
+            String boss = listChar[0];
+            String answer = importMoneyStatsSubtract(Integer.parseInt(CASTLE.getCost()), boss);
+            buyIfEnoughFunds(boss, answer, new String[]{CASTLE.toString()});
+        });
         JLabel label507 = new JLabel(PALACE.toString()+ ": " + PALACE.getCost()+ " coins.");
         JButton button507 = new JButton("Buy this property");
+        button507.addActionListener(e ->{
+            String[] listChar = ExportCharacterList.exportCharacterList();
+            String boss = listChar[0];
+            String answer = importMoneyStatsSubtract(Integer.parseInt(PALACE.getCost()), boss);
+            buyIfEnoughFunds(boss, answer, new String[]{PALACE.toString()});
+        });
         JLabel label508 = new JLabel(WAREHOUSE.toString()+ ": " + WAREHOUSE.getCost()+ " coins.");
         JButton button508 = new JButton("Buy this property");
+        button508.addActionListener(e ->{
+            String[] listChar = ExportCharacterList.exportCharacterList();
+            String boss = listChar[0];
+            String answer = importMoneyStatsSubtract(Integer.parseInt(WAREHOUSE.getCost()), boss);
+            buyIfEnoughFunds(boss, answer, new String[]{WAREHOUSE.toString()});
+        });
 
-        panel05.add(label501 );
+        panel05.add(label501);
         panel05.add(button501);
         panel05.add(label502);
         panel05.add(button502);
@@ -410,7 +452,6 @@ public abstract class Main {
         panel05.add(button507);
         panel05.add(label508);
         panel05.add(button508);
-
 
         // fifth panel
         JPanel panel04 = new JPanel(false);
@@ -456,6 +497,15 @@ public abstract class Main {
 
 
 
+    }
+
+    private static void buyIfEnoughFunds(String boss, String answer, String[] strings) {
+        if (answer.equals("Positive")){
+            ExportData.storeData(strings, boss, RVS);
+            JOptionPane.showMessageDialog(null, "You have bought this property");
+        } else {
+            JOptionPane.showMessageDialog(null, "You don't have enough money");
+        }
     }
 
     public static void systemPrint() {

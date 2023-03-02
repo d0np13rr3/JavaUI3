@@ -8,12 +8,12 @@ public class Troll extends Character{
     private String name;
     Actions action = new Actions();
     public Troll(String name, Actions action){
-        health = 100;
-        attack = 10;
+        health = 200;
+        attack = 25;
         magic = 0;
         mana = 0;
-        dexterity = 25;
-        defense = 10;
+        dexterity = 0;
+        defense = 50;
 
         this.name = name;
     }

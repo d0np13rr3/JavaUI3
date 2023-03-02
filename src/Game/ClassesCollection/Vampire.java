@@ -9,11 +9,11 @@ public class Vampire extends Character{
     Actions action = new Actions();
     public Vampire(String name, Actions action){
         health = 100;
-        attack = 10;
-        magic = 0;
-        mana = 0;
-        dexterity = 25;
-        defense = 10;
+        attack = 25;
+        magic = 25;
+        mana = 25;
+        dexterity = 50;
+        defense = 25;
 
         this.name = name;
     }

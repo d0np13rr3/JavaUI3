@@ -8,12 +8,12 @@ public class God extends Character{
     private String name;
 
     public God(String name, Actions action) {
-        health = 100;
-        attack = 10;
-        magic = 0;
-        mana = 0;
-        dexterity = 25;
-        defense = 10;
+        this.health = 1000;
+        attack = 100;
+        magic = 100;
+        mana = 100;
+        dexterity = 100;
+        defense = 1000;
 
         this.name = name;
 
@@ -33,5 +33,10 @@ public class God extends Character{
     @Override
     public int getHealth() {
         return health;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }

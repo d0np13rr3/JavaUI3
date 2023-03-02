@@ -2,6 +2,7 @@ package Game.import_export_data;
 
 import Game.CheckData.ExportCharacterList;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -67,5 +68,42 @@ public class MoneyActions {
 
 
         return moneyToReturn;
+    }
+
+    public static String importMoneyStatsSubtract(int moneyToSubtract, String spacesName){
+        String name = spacesName.replaceAll(" ","_");
+
+        exportMoneyStats(name);
+        int sumOfMoney = exportMoneyStats(name) - moneyToSubtract;
+
+        if(sumOfMoney < 0){
+//            infoBox("You don' have enough money.", "Money facts");
+            return "Negative";
+        }else {
+
+            String formatExp = String.valueOf(sumOfMoney);
+            String formatZeroes = ImportData.addRealTrailingZeroes(formatExp);
+            String currencyMoney = formatZeroes + "CURRENCY";
+            String moneyArray[] = ExportNameAndClass.exportCharacterStats(name);
+            moneyArray[4] = currencyMoney;
+            //writing to file
+            try {
+                FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + spacesName + "CharacterSaveCode.txt");
+                for (String dataLine : moneyArray) {
+                    myWriter.write(dataLine + "\n");
+                }
+                myWriter.close();
+                System.out.println(currencyMoney + " Successfully wrote to the money file.");
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        }return "Positive";
+
+    }
+
+    public static void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
 }

@@ -16,9 +16,9 @@ public class PopUpWindows {
 
         f.setUndecorated(false); //removes the surrounding border
 
-        ImageIcon image00 = new ImageIcon("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\DV3.png"); //imports the image
-        ImageIcon image01 = new ImageIcon("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\BT3.png"); //imports the image
-        ImageIcon image02 = new ImageIcon("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\JD3.png"); //imports the image
+        ImageIcon image00 = new ImageIcon("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Images\\DV3.png"); //imports the image
+        ImageIcon image01 = new ImageIcon("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Images\\BT3.png"); //imports the image
+        ImageIcon image02 = new ImageIcon("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Images\\JD3.png"); //imports the image
 
 
         JLabel lbl00 = new JLabel(image00); //puts the image into a jlabel
