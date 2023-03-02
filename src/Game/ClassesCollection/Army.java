@@ -3,6 +3,7 @@ package Game.ClassesCollection;
 import Game.Actions;
 
 import java.util.*;
+import java.util.Random;
 
 public class Army {
     Character[] character;
@@ -74,7 +75,8 @@ public class Army {
         for(Map.Entry<String, Character> key : armyToAddOne.entrySet()) {
             HealthToCollect.add(key.getValue().getHealth());
         }
-        Collections.reverse(HealthToCollect);
+        Collections.sort(HealthToCollect);
+        //Collections.reverse(HealthToCollect);
         return HealthToCollect;
     }
     static int getDefenseFromArmy(HashMap<String, Character> armyToAddOne, Army army) {
@@ -94,6 +96,7 @@ public class Army {
         return total;
     }
     String battleBetweenArmies(HashMap<String, Character> armyOne, Army armyOneMade, HashMap<String, Character> armyTwo, Army armyTwoMade){
+        Random random = new Random();
         //Determine attack of first army
         //Determine starting health of armies
         int startArmyOne = armyOneMade.getHealthFromArmy(armyOne, armyOneMade);
@@ -105,8 +108,8 @@ public class Army {
         //while loop that battles two armies
         while( startArmyOne > 0 && startArmyTwo > 0) {
             //first army
-            int attackOne = armyOneMade.getAttackFromArmy(armyOne, armyOneMade);
-            int defenseTwo = armyTwoMade.getDefenseFromArmy(armyTwo, armyTwoMade);
+            int attackOne = (int) (armyOneMade.getAttackFromArmy(armyOne, armyOneMade)*(random.nextDouble(0.5,1.5)));
+            int defenseTwo = (int) (armyTwoMade.getDefenseFromArmy(armyTwo, armyTwoMade)*(random.nextDouble(0.5,1.5)));
             int damageDone1 = attackOne + DamageOneToTransfer - defenseTwo;
             if (damageDone1 <= 0) {
                 damageDone1 = 0;
@@ -151,8 +154,8 @@ public class Army {
             }
 
             //second army
-            int defenseOne = armyOneMade.getDefenseFromArmy(armyOne, armyOneMade);
-            int attackTwo = armyTwoMade.getAttackFromArmy(armyTwo, armyTwoMade);
+            int defenseOne = (int) (armyOneMade.getDefenseFromArmy(armyOne, armyOneMade)*(random.nextDouble(0.75,1.25)));
+            int attackTwo = (int) (armyTwoMade.getAttackFromArmy(armyTwo, armyTwoMade)*(random.nextDouble(0.75,1.25)));
             int damageDone2 = attackTwo - defenseOne;
             if (damageDone2 <= 0) {
                 damageDone2 = 0;
@@ -267,8 +270,8 @@ class ArmyApp{
         character[8] = new Skeleton("Electrabuzz", action);
         Character[] character00 = new Character[3];
         character00[0] = new Demon("Satan",action);
-        character00[1] = new Human("Satan_",action);
-        character00[2] = new Werewolf("Satan__",action);
+        character00[1] = new Human("Mephisto",action);
+        character00[2] = new Werewolf("Diablo",action);
         //First step - building army
         Army army1 = new Army(character);
         Army army2 = new Army(character00);

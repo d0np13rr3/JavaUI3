@@ -39,7 +39,9 @@ public abstract class Main {
     static final String RVS = "RealEstateSaveCode";
     //variables
     public static JTextArea console;
+    public static JTextArea console60;
     public static JScrollPane console2;
+    public static JScrollPane console62;
     public static JScrollPane console0;
     public static JTextArea console01;
     public static JTextArea console001;
@@ -64,31 +66,30 @@ public abstract class Main {
         // Makes window
         createWindow();
     }
+    public static void infoWarBox(String infoMessage, String titleBar)
+    {
+                // JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+        //JDialog.PROPERTIES(f,"War",true);
+    }
 
     private static void createWindow() throws IOException {
 
         JFrame frame = new JFrame("Battle Royal - Crossover");
         JMenuBar menubar = new JMenuBar();
         JMenu menu = new JMenu("Battle Menu");
-        JMenuItem size00 = new JMenuItem("Reset Battle - on first page");
-        JMenuItem size01 = new JMenuItem("Reset Equipment - on first page");
+        JMenuItem size00 = new JMenuItem("Create Army One");
+        JMenuItem size01 = new JMenuItem("Create Army Two");
 
         size00.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                console.setText("");
-            }
-        });
+            //infoWarBox("War","Choose an Army");
+        }});
 
         size01.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String characterFirst  = String.valueOf(CharacterOne.getItemAt(CharacterOne.getSelectedIndex()));
-                String characterSecond  = String.valueOf(CharacterTwo.getItemAt(CharacterTwo.getSelectedIndex()));
-                resetWeapon(characterFirst);
-                resetWeapon(characterSecond);
-                console001.setText("");
-                console002.setText("");
+                //infoWarBox();
             }
         });
 
@@ -454,6 +455,30 @@ public abstract class Main {
         panel05.add(button508);
 
         // fifth panel
+        JPanel panel06 = new JPanel(false);
+        tabbedPane.addTab("War", null, panel06, "Tab 5 tooltip");
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
+
+        JButton button60 = new JButton("Battle");
+
+        console60 = new JTextArea(10, 25);
+        console62 = new JScrollPane(console60);
+
+        panel06.setLayout(new BorderLayout());
+        panel06.add(CharacterOne, BorderLayout.LINE_START);
+        panel06.add(CharacterTwo, BorderLayout.LINE_END);
+
+        panel06.add(button60, BorderLayout.SOUTH);
+        panel06.add(console62, BorderLayout.CENTER);
+
+        // sixth panel
+        JPanel panel07 = new JPanel(false);
+        tabbedPane.addTab("War", null, panel07, "Tab 5 tooltip");
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
+
+
+
+        // seventh panel
         JPanel panel04 = new JPanel(false);
         tabbedPane.addTab("Information", null, panel04, "Tab 5 tooltip");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
