@@ -483,7 +483,7 @@ public abstract class Main {
 
         // sixth panel
         JPanel panel07 = new JPanel(false);
-        tabbedPane.addTab("War Layout", null, panel07, "Tab 5 tooltip");
+        tabbedPane.addTab("Army Layout", null, panel07, "Tab 5 tooltip");
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
         panel07.setLayout(new GridLayout(0,6));
 
