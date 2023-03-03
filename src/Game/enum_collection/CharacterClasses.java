@@ -13,6 +13,7 @@ public enum CharacterClasses {
     ANGEL("Angel"),
     DRAGON("Dragon"),
     GOD("God"),
+    SKELETON("Skeleton"),
     SUPERHUMAN("Superhuman");
     private String name;
     CharacterClasses(String classCharacter){

@@ -10,6 +10,6 @@ public abstract class Character {
 
     @Override
     public String toString() {
-        return "Name " + getName() + " Attack: " + getAttack() + ", Defense: " + getDefense() + ", Health: " + getHealth() + ".";
+        return "Name " + getName() + "\n" +" Attack: " + getAttack() + "\n" +", Defense: " + getDefense() + "\n" + ", Health: " + getHealth() + ".\n";
     }
 }

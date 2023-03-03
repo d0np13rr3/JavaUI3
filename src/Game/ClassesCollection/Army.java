@@ -9,6 +9,19 @@ public class Army {
     Character[] character;
     private int attackOfArmy;
     private int defenseOfArmy;
+
+    @Override
+    public String toString() {
+        return "Army{" +
+                "character=" + Arrays.toString(character) + "\n" +
+                ", attackOfArmy=" + attackOfArmy + "\n" +
+                ", defenseOfArmy=" + defenseOfArmy + "\n" +
+                ", healthOfArmy=" + healthOfArmy+ "\n" +
+                ", sizeArmy=" + sizeArmy + "\n" +
+                ", healthArmy=" + healthArmy + "\n" +
+                '}';
+    }
+
     private int healthOfArmy;
     private int sizeArmy = 0;
     private int healthArmy;
