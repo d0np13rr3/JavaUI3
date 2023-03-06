@@ -29,8 +29,14 @@ public class Army {
     //TryMe
     HashMap<String, Character> armyToAdd = new HashMap<String, Character>();
     public HashMap<String, Character> putArmyInDict(Army army) {
+        System.out.println("army = " + army);
+        System.out.println("characters = " + character.length);
         for (Character character: character){
-            armyToAdd.put(character.getName(), character);
+            if (character == null){
+            } else {
+                System.out.println("characterPerIterate = " + character.getName());
+                armyToAdd.put(character.getName(), character);
+            }
         }return armyToAdd;
     }
     //Works
@@ -66,7 +72,7 @@ public class Army {
         }
         return sumValues;
     }
-    static int getHealthFromArmy(HashMap<String, Character> armyToAddOne, Army army) {
+    public static int getHealthFromArmy(HashMap<String, Character> armyToAddOne, Army army) {
         ArrayList<Integer> listOfKeysHealth = new ArrayList<Integer>();
         for(Map.Entry<String, Character> key : armyToAddOne.entrySet()) {
             listOfKeysHealth.add(key.getValue().getHealth());
@@ -263,6 +269,11 @@ public class Army {
         for (Character character: character){
             System.out.println(character.getName() + " has " + character.getHealth());
         }
+    }
+
+    public void getStringPrintOfArmy(){
+
+
     }
 }
 

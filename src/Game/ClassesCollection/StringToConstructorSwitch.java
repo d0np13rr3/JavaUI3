@@ -35,6 +35,9 @@ public class StringToConstructorSwitch {
             case "Zombie":
                 Zombie zombie01 = new Zombie(nameOfCharacter, action);
                 return zombie01;
+            case "Skeleton":
+                Skeleton skeleton01 = new Skeleton(nameOfCharacter, action);
+                return skeleton01;
             default:
                 return null;
         }

@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static Game.Main.*;
@@ -29,10 +30,12 @@ public class Actions {
     }
 
     public static String Battle(int humanAttackOne, int humanDefenseOne, int humanAttackTwo,  int humanDefenseTwo, int humanHealthOne, int humanHealthTwo, String humanNameOne, String humanNameTwo) {
+        ArrayList<String> Battlelog = new ArrayList<String>();
+        //Battlelog.add("Health: 1 - " + humanHealthOne + " Health: 2 - " + humanHealthTwo);
         int playerOneLife = humanHealthOne;
         int playerTwoLife = humanHealthTwo;
-        System.out.println(playerOneLife);
-        System.out.println(playerTwoLife);
+        //Battlelog.add("Player One Life " + playerOneLife);
+        //Battlelog.add("Player Two Life " + playerTwoLife);
 
         // define starting player
         Random random00 = new Random();
@@ -47,18 +50,19 @@ public class Actions {
                 AttackByOne = 0;
             }
             playerTwoLife = playerTwoLife - AttackByOne;
+            //console.append("line1AttackbyOne " + humanNameOne + " attacked for " + AttackByOne + ".\n" + humanNameTwo + " has " + playerTwoLife + " health left." + "\n");
             if (playerTwoLife <= 0){
                 int calculatedExperience = ExperienceActions.calculateExperience(ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameOne)),ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameTwo)));
                 ExperienceActions.importExperienceStats(calculatedExperience, humanNameOne);
                 int calculatedMoney = MoneyActions.calculateMoney(ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameOne)));
                 System.out.println(calculatedMoney + " calc money in battle");
                 MoneyActions.importMoneyStats(calculatedMoney,humanNameOne);
-                console.append(humanNameOne + " attacked for " + AttackByOne + ". " + "\n" + humanNameTwo + " lost the battle.\n");
-                console.append(humanNameOne + " gained " + calculatedExperience + " experience.\n");
-                console.append(humanNameOne + " picked up " + calculatedMoney + " coins.\n");
+                Battlelog.add(humanNameOne + " attacked for " + AttackByOne + ". " + "\n" + humanNameTwo + " lost the battle.\n");
+                Battlelog.add(humanNameOne + " gained " + calculatedExperience + " experience.\n");
+                Battlelog.add(humanNameOne + " picked up " + calculatedMoney + " coins.\n");
                 break;
-            }else {
-                console.append(humanNameOne + " attacked for " + AttackByOne + ". " + humanNameTwo + " has " + playerTwoLife + " health left." + "\n");
+            }else if (playerTwoLife >0){
+                Battlelog.add("" + humanNameOne + " attacked for " + AttackByOne + ". " + humanNameTwo + " has " + playerTwoLife + " health left." + "\n");
             }
 
             int AttackByTwo;
@@ -67,19 +71,23 @@ public class Actions {
                 AttackByTwo = 0;
             }
             playerOneLife = playerOneLife - AttackByTwo;
+            //console.append("line1AttackbyTwo" +  humanNameTwo + " attacked for " + AttackByTwo + ".\n" + humanNameOne + " has " + playerOneLife + " health left." + "\n");
             if (playerOneLife <= 0){
                 int calculatedExperience = ExperienceActions.calculateExperience(ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameTwo)),ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameOne)));
                 ExperienceActions.importExperienceStats(calculatedExperience, humanNameTwo);
                 int calculatedMoney = MoneyActions.calculateMoney(ExperienceActions.levelCalculator(ExperienceActions.exportExperienceStats(humanNameTwo)));
                 MoneyActions.importMoneyStats(calculatedMoney,humanNameTwo);
-                console.append(humanNameTwo + " attacked for " + AttackByTwo + ". " + "\n" + humanNameOne + " lost the battle.\n");
-                console.append(humanNameTwo + " gained " + calculatedExperience + " experience.\n");
-                console.append(humanNameTwo + " picked up " + calculatedMoney + " coins.\n");
+                Battlelog.add(humanNameTwo + " attacked for " + AttackByTwo + ". " + "\n" + humanNameOne + " lost the battle.\n");
+                Battlelog.add(humanNameTwo + " gained " + calculatedExperience + " experience.\n");
+                Battlelog.add(humanNameTwo + " picked up " + calculatedMoney + " coins.\n");
                 break;
 
-            }else {
-                console.append(humanNameTwo + " attacked for " + AttackByTwo + ". " + humanNameOne + " has " + playerOneLife + " health left." + "\n");
+            }else if (playerOneLife > 0){
+                Battlelog.add("" + humanNameTwo + " attacked for " + AttackByTwo + ". " + humanNameOne + " has " + playerOneLife + " health left." + "\n");
             }
+        }
+        for (String s : Battlelog) {
+            console.append(s);
         }
 
         return "Battled";

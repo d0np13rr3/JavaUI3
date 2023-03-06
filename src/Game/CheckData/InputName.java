@@ -47,7 +47,7 @@ public class InputName {
 
         //writing to file
         try {
-            FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\CharacterList.txt",true);
+            FileWriter myWriter = new FileWriter("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\CharacterList.txt",true);
             myWriter.write(spacesName + "\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");

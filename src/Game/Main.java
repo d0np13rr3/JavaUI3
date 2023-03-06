@@ -11,6 +11,7 @@ import Game.enum_collection.CharacterClasses;
 import Game.enum_collection.CharacterSubClasses;
 import Game.enum_collection.WeaponEnum;
 import Game.import_export_data.ExportData;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,7 +21,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.*;
 
 import static Game.CheckData.InputName.inputName;
 import static Game.StoryCollection.StoryContinue.StoryContinues;
@@ -56,6 +59,7 @@ public abstract class Main {
 
     //creates Character list
     ExportCharacterList exportCharacterList = new ExportCharacterList();
+    int lengthListCharacters = ExportCharacterList.exportCharacterList().length;
     public static JComboBox CharacterOne = new JComboBox(ExportCharacterList.exportCharacterList());
     public static JComboBox CharacterTwo = new JComboBox(ExportCharacterList.exportReverseCharacterList());
     public static JComboBox CharacterOnePage2 = new JComboBox(ExportCharacterList.exportCharacterList());
@@ -213,11 +217,11 @@ public abstract class Main {
                 //haal wapenschade op van de 2 geselecteerde namen
                 int weaponDamage1 = 0;
                 int weaponDamage2 = 0;
-                try {
+                try{
                     weaponDamage1 = Integer.parseInt(exportWeaponStats(characterFirst)[1]);
                     weaponDamage2 = Integer.parseInt(exportWeaponStats(characterSecond)[1]);
-                } catch (Exception ex) {
-                    System.out.println("No weapons selected");
+                } catch (Exception exception) {
+
                 }
                 //steek ze in Battle
                 Actions.Battle((humanAttack1+weaponDamage1), humanDefense1, (humanAttack2+weaponDamage2), humanDefense2, humanHealth1, humanHealth2, humanName1, humanName2);
@@ -360,6 +364,8 @@ public abstract class Main {
                 //add character file
                 String arrayOfData[] = {name, classOfChoice, subClassOfChoice};
                 ExportData.storeData(arrayOfData,name, CVS);
+                String[] weaponStatsOnSave = {};
+                ExportData.storeData(weaponStatsOnSave, name, WVS);
             }
         });
 
@@ -462,10 +468,14 @@ public abstract class Main {
 
         JButton button60 = new JButton("Battle");
         button60.addActionListener(e ->{
-            String output = "";
+            HashMap<String, Character> armyToAddOne = armyOne.putArmyInDict(armyOne);
+            HashMap<String, Character> armyToAddTwo = armyTwo.putArmyInDict(armyTwo);
+            console60.setText("");
             console60.append("Battle started!\n");
-            String dumpArmy = armyOne.toString();
-            console60.append(dumpArmy);
+            console60.append("First army has " + armyOne.getHealthFromArmy(armyToAddOne, armyOne) + " health points.\n");
+            console60.append("Second army has " + armyTwo.getHealthFromArmy(armyToAddTwo, armyTwo) + " health points.\n");
+            //String dumpArmy = armyOne.toString();
+            //console60.append(dumpArmy);
 
         });
         JLabel label5501 = new JLabel("First Army");
@@ -490,11 +500,47 @@ public abstract class Main {
         button1007 = new JButton();
         button1007.setText("Save Army One");
         button1007.addActionListener(e ->{
-            Character[] soldiers01 = new Character[1];
-            //general 1
+            //arraylist to try
+            ArrayList<Character> soldiersArray01 = new ArrayList<Character>();
+            //general 1//
             Character character101 = getCharacterFromButton(comboBox1);
+            addSoldierIfNotNull(soldiersArray01, character101);
+            //soldiers 1//
+            Character character102 = getCharacterFromButton(comboBox3);
+            addSoldierIfNotNull(soldiersArray01, character102);
+            Character character103 = getCharacterFromButton(comboBox7);
+            addSoldierIfNotNull(soldiersArray01, character103);
+            Character character104 = getCharacterFromButton(comboBox11);
+            addSoldierIfNotNull(soldiersArray01, character104);
+            Character character105 = getCharacterFromButton(comboBox15);
+            addSoldierIfNotNull(soldiersArray01, character105);
+            Character character106 = getCharacterFromButton(comboBox19);
+            addSoldierIfNotNull(soldiersArray01, character106);
+            Character character107 = getCharacterFromButton(comboBox23);
+            addSoldierIfNotNull(soldiersArray01, character107);
+            Character character108 = getCharacterFromButton(comboBox27);
+            addSoldierIfNotNull(soldiersArray01, character108);
+            Character character109 = getCharacterFromButton(comboBox31);
+            addSoldierIfNotNull(soldiersArray01, character109);
+            Character character110 = getCharacterFromButton(comboBox35);
+            addSoldierIfNotNull(soldiersArray01, character110);
+            Character character111 = getCharacterFromButton(comboBox39);
+            addSoldierIfNotNull(soldiersArray01, character111);
+            Character character112 = getCharacterFromButton(comboBox43);
+            addSoldierIfNotNull(soldiersArray01, character112);
+            Character character113 = getCharacterFromButton(comboBox47);
+            addSoldierIfNotNull(soldiersArray01, character113);
+            Character character114 = getCharacterFromButton(comboBox51);
+            addSoldierIfNotNull(soldiersArray01, character114);
+            Character character115 = getCharacterFromButton(comboBox55);
+            addSoldierIfNotNull(soldiersArray01, character115);
             //add to first Army
-            soldiers01[0] = character101;
+            Character[] soldiers01 = new Character[soldiersArray01.size()];
+            int iteratorOverSoldiers = 0;
+            for(Character c : soldiersArray01){
+                soldiers01[iteratorOverSoldiers] = c;
+                iteratorOverSoldiers++;
+            }
             armyOne = new Army(soldiers01);
 
         });
@@ -502,9 +548,47 @@ public abstract class Main {
         button2007 = new JButton();
         button2007.setText("Save Army Two");
         button2007.addActionListener(e ->{
-            Character[] soldiers02 = new Character[1];
+            //arraylist to try
+            ArrayList<Character> soldiersArray02 = new ArrayList<Character>();
             //general 2
             Character character201 = getCharacterFromButton(comboBox2);
+            addSoldierIfNotNull(soldiersArray02, character201);
+            //soldiers 2
+            Character character202 = getCharacterFromButton(comboBox6);
+            addSoldierIfNotNull(soldiersArray02, character202);
+            Character character203 = getCharacterFromButton(comboBox10);
+            addSoldierIfNotNull(soldiersArray02, character203);
+            Character character204 = getCharacterFromButton(comboBox14);
+            addSoldierIfNotNull(soldiersArray02, character204);
+            Character character205 = getCharacterFromButton(comboBox18);
+            addSoldierIfNotNull(soldiersArray02, character205);
+            Character character206 = getCharacterFromButton(comboBox22);
+            addSoldierIfNotNull(soldiersArray02, character206);
+            Character character207 = getCharacterFromButton(comboBox26);
+            addSoldierIfNotNull(soldiersArray02, character207);
+            Character character208 = getCharacterFromButton(comboBox30);
+            addSoldierIfNotNull(soldiersArray02, character208);
+            Character character209 = getCharacterFromButton(comboBox34);
+            addSoldierIfNotNull(soldiersArray02, character209);
+            Character character210 = getCharacterFromButton(comboBox38);
+            addSoldierIfNotNull(soldiersArray02, character210);
+            Character character211 = getCharacterFromButton(comboBox42);
+            addSoldierIfNotNull(soldiersArray02, character211);
+            Character character212 = getCharacterFromButton(comboBox46);
+            addSoldierIfNotNull(soldiersArray02, character212);
+            Character character213 = getCharacterFromButton(comboBox50);
+            addSoldierIfNotNull(soldiersArray02, character213);
+            Character character214 = getCharacterFromButton(comboBox54);
+            addSoldierIfNotNull(soldiersArray02, character214);
+            Character character215 = getCharacterFromButton(comboBox58);
+            addSoldierIfNotNull(soldiersArray02, character215);
+            //add to second Army
+            Character[] soldiers02 = new Character[soldiersArray02.size()];
+            int iteratorOverSoldiers = 0;
+            for(Character c : soldiersArray02){
+                soldiers02[iteratorOverSoldiers] = c;
+                iteratorOverSoldiers++;
+            }
             armyTwo = new Army(soldiers02);
         });
         //eerste lijn
@@ -523,7 +607,7 @@ public abstract class Main {
         label2.setText("2* General");
         panel07.add(label2);
         //tweede lijn
-        comboBox1 = new JComboBox(ExportCharacterList.exportCharacterList());;
+        comboBox1 = new JComboBox(ExportCharacterList.exportCharacterList());
         panel07.add(comboBox1);
         comboBox9999  = new JComboBox(WeaponEnum.values());
         panel07.add(comboBox9999);
@@ -553,119 +637,119 @@ public abstract class Main {
         label4.setText("2* Team");
         panel07.add(label4);
         //vierde lijn
-        comboBox3 = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox3 = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox3);
-        comboBox4  = new JComboBox(WeaponEnum.values());
+        comboBox4  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox4);
         panel07.add(button1007 );
         panel07.add(button2007 );
-        comboBox5  = new JComboBox(WeaponEnum.values());
+        comboBox5  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox5);
-        comboBox6 = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox6 = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox6);
         //vijfde lijn;
-        comboBox7  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox7  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox7);
-        comboBox8  = new JComboBox(WeaponEnum.values());
+        comboBox8  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox8);
         final JLabel label232 = new JLabel();
         panel07.add(label232);
         final JLabel label233 = new JLabel();
         panel07.add(label233);
-        comboBox9  = new JComboBox(WeaponEnum.values());
+        comboBox9  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox9);
-        comboBox10  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox10  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox10);
         //zesde lijn
-        comboBox11  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox11  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox11); 
-        comboBox12  = new JComboBox(WeaponEnum.values());
+        comboBox12  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox12);
         final JLabel label234 = new JLabel();
         panel07.add(label234);
         final JLabel label235 = new JLabel();
         panel07.add(label235);
-        comboBox13  = new JComboBox(WeaponEnum.values());
+        comboBox13  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox13); 
-        comboBox14  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox14  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox14);
         //zevende lijn
-        comboBox15 = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox15 = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox15); 
-        comboBox16  = new JComboBox(WeaponEnum.values());
+        comboBox16  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox16);
         final JLabel label236 = new JLabel();
         panel07.add(label236);
         final JLabel label237 = new JLabel();
         panel07.add(label237);
-        comboBox17  = new JComboBox(WeaponEnum.values());
+        comboBox17  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox17 );
-        comboBox18  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox18  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox18);
         //8e lijn
-        comboBox19  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox19  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox19); 
-        comboBox20  = new JComboBox(WeaponEnum.values());
+        comboBox20  =new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox20);
         final JLabel label238 = new JLabel();
         panel07.add(label238);
         final JLabel label239 = new JLabel();
         panel07.add(label239);
-        comboBox21  = new JComboBox(WeaponEnum.values());
+        comboBox21  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox21);
-        comboBox22 = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox22 = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox22);
         //9e lijn
-        comboBox23  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox23  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox23);
-        comboBox24  = new JComboBox(WeaponEnum.values());
+        comboBox24  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox24 );
         final JLabel label240 = new JLabel();
         panel07.add(label240);
         final JLabel label241 = new JLabel();
         panel07.add(label241);
-        comboBox25 = new JComboBox(WeaponEnum.values());
+        comboBox25 = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox25 ); 
-        comboBox26  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox26  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox26 );
         //10e lijn
-        comboBox27  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox27  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox27 );
-        comboBox28  = new JComboBox(WeaponEnum.values());
+        comboBox28  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox28 );
         final JLabel label242 = new JLabel();
         panel07.add(label242);
         final JLabel label243 = new JLabel();
         panel07.add(label243);
-        comboBox29  = new JComboBox(WeaponEnum.values());
+        comboBox29  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox29 );
-        comboBox30 = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox30 = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox30 );
         //11e lijn
-        comboBox31  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox31  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox31 );
-        comboBox32  = new JComboBox(WeaponEnum.values());
+        comboBox32  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox32 );
         final JLabel label244 = new JLabel();
         panel07.add(label244);
         final JLabel label245 = new JLabel();
         panel07.add(label245);
-        comboBox33  = new JComboBox(WeaponEnum.values());
+        comboBox33  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox33 );
-        comboBox34  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox34  =new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox34 );
         //12e lijn
-        comboBox35  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox35  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox35  );
-        comboBox36  = new JComboBox(WeaponEnum.values());
+        comboBox36  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox36 );
         final JLabel label246 = new JLabel();
         panel07.add(label246);
         final JLabel label247 = new JLabel();
         panel07.add(label247);
-        comboBox37 = new JComboBox(WeaponEnum.values());
+        comboBox37 = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox37  );
-        comboBox38  = new JComboBox(ExportCharacterList.exportCharacterList());
+        comboBox38  = new JComboBox(returnCharacterListWithBlank(ExportCharacterList.exportCharacterList()));
         panel07.add(comboBox38 );
         //13e lijn
         final JLabel label5 = new JLabel();
@@ -687,69 +771,69 @@ public abstract class Main {
         label8.setText("2* Troops");
         panel07.add(label8);
         //14e lijn
-        comboBox39 = new JComboBox(CharacterClasses.values());
+        comboBox39 = new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox39  );
-        comboBox40  = new JComboBox(WeaponEnum.values());
+        comboBox40  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox40  );
         textField3 = new JTextField();
         panel07.add(textField3 );
         textField4 = new JTextField();
         panel07.add(textField4);
-        comboBox41  = new JComboBox(WeaponEnum.values());
+        comboBox41  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox41  );
-        comboBox42 = new JComboBox(CharacterClasses.values());
+        comboBox42 =new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox42 );
         //15e lijn
-        comboBox43 = new JComboBox(CharacterClasses.values());
+        comboBox43 = new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox43  );
-        comboBox44 = new JComboBox(WeaponEnum.values());
+        comboBox44 = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox44  );
         textField5 = new JTextField();
         panel07.add(textField5 );
         textField6 = new JTextField();
         panel07.add(textField6 );
-        comboBox45  = new JComboBox(WeaponEnum.values());
+        comboBox45  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox45 );
-        comboBox46 = new JComboBox(CharacterClasses.values());
+        comboBox46 = new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox46  );
         //16e lijn
-        comboBox47  = new JComboBox(CharacterClasses.values());
+        comboBox47  = new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox47  );
-        comboBox48  = new JComboBox(WeaponEnum.values());
+        comboBox48  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox48  );
         textField7 = new JTextField();
         panel07.add(textField7 );
         textField8 = new JTextField();
         panel07.add(textField8 );
-        comboBox49  = new JComboBox(WeaponEnum.values());
+        comboBox49  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox49  );
-        comboBox50 = new JComboBox(CharacterClasses.values());
+        comboBox50 = new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox50  );
         //17e lijn
-        comboBox51 = new JComboBox(CharacterClasses.values());
+        comboBox51 = new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox51 );
-        comboBox52  = new JComboBox(WeaponEnum.values());
+        comboBox52  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox52  );
         textField9 = new JTextField();
         panel07.add(textField9);
         textField10 = new JTextField();
         panel07.add(textField10 );
-        comboBox53 = new JComboBox(WeaponEnum.values());
+        comboBox53 = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox53  );
-        comboBox54 = new JComboBox(CharacterClasses.values());
+        comboBox54 = new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox54 );
         //18e lijn
-        comboBox55 = new JComboBox(CharacterClasses.values());
+        comboBox55 = new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox55 );
-        comboBox56  = new JComboBox(WeaponEnum.values());
+        comboBox56  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox56  );
         textField11 = new JTextField();
         panel07.add(textField11  );
         textField12 = new JTextField();
         panel07.add(textField12  );
-        comboBox57  = new JComboBox(WeaponEnum.values());
+        comboBox57  = new JComboBox(returnWeaponListWithBlank(WeaponEnum.values()));
         panel07.add(comboBox57  );
-        comboBox58  = new JComboBox(CharacterClasses.values());
+        comboBox58  = new JComboBox(returnCharacterListWithBlank(CharacterClasses.values()));
         panel07.add(comboBox58  );
 
         // seventh panel
@@ -798,6 +882,15 @@ public abstract class Main {
 
     }
 
+    private static void addSoldierIfNotNull(ArrayList<Character> soldiersArray, Character character) {
+
+        if (character != null) {
+            soldiersArray.add(character);
+            System.out.println(", character trait= " + character.getName());
+            System.out.println( ", arraysize = " + soldiersArray.size());
+        }
+    }
+
     private static Character getCharacterFromButton(JComboBox comboBox1) {
         try{
         String characterFirst  = String.valueOf(comboBox1.getItemAt(comboBox1.getSelectedIndex()));
@@ -808,6 +901,8 @@ public abstract class Main {
         return characterOne;
         }catch (Exception e){
             return null;
+
+
         }
     }
 
@@ -818,6 +913,33 @@ public abstract class Main {
         } else {
             JOptionPane.showMessageDialog(null, "You don't have enough money");
         }
+    }
+
+    private static String[] returnCharacterListWithBlank(String[] characterListed) {
+        String[] characterList = new String[characterListed.length + 1];
+        characterList[0] = "";
+        for (int i = 1; i < characterList.length; i++) {
+            characterList[i] = characterListed[i - 1];
+        }
+        return characterList;
+    }
+
+    private static String[] returnWeaponListWithBlank(WeaponEnum[] weaponListed) {
+        String[] weaponList = new String[weaponListed.length + 1];
+        weaponList[0] = "";
+        for (int i = 1; i < weaponList.length; i++) {
+            weaponList[i] = weaponListed[i - 1].getName();
+        }
+        return weaponList;
+    }
+
+    private static String[] returnCharacterListWithBlank(CharacterClasses[] characterListed) {
+        String[] characterList = new String[characterListed.length + 1];
+        characterList[0] = "";
+        for (int i = 1; i < characterList.length; i++) {
+            characterList[i] = characterListed[i - 1].getName();
+        }
+        return characterList;
     }
 
     public static void systemPrint() {

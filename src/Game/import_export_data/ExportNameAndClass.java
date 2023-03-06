@@ -12,6 +12,9 @@ public class ExportNameAndClass {
         ArrayList<String> Stats = new ArrayList<String>();
         String[] statsArray;
         try {
+            if (name == "") {
+                System.out.println("Name is null");
+            } else {
             File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + name + "CharacterSaveCode.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
@@ -21,7 +24,7 @@ public class ExportNameAndClass {
             }
             myReader.close();
             statsArray = Stats.toArray(new String[0]);
-            return statsArray;
+            return statsArray;}
 
         } catch (
                 FileNotFoundException e) {
@@ -35,6 +38,7 @@ public class ExportNameAndClass {
         ArrayList<String> Stats = new ArrayList<String>();
         String[] statsArray;
         try {
+
             File myObj = new File("C:\\Users\\ppauwelb\\IdeaProjects\\JavaUI3\\src\\Database\\" + name + "WeaponSaveCode.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
@@ -46,8 +50,7 @@ public class ExportNameAndClass {
             statsArray = Stats.toArray(new String[0]);
             return statsArray;
 
-        } catch (
-                FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }return null;

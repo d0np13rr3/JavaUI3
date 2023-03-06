@@ -4,3 +4,7 @@ Yoda
 Judge_Dredd
 Queen_Elizabeth
 Thor
+Jens
+GodOfHumans
+Diablo
+Inquisitor

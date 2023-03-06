@@ -37,6 +37,6 @@ public class God extends Character{
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 }
